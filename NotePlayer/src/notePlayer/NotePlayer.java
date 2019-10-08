@@ -1,8 +1,9 @@
 package notePlayer;
 
 import core.MidiWrapper;
-
+import java.util.Scanner;
 public class NotePlayer
+
 {
     public static void main(String[] args)
     {
@@ -19,7 +20,12 @@ public class NotePlayer
     	
     }
     
-    
+    public static void scan ()
+    {
+    	Scanner console = new Scanner (System.in);
+    	String noteinput=console.nextLine();
+    	System.out.print();
+    }
     
     
     
