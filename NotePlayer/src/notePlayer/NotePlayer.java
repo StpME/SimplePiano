@@ -27,8 +27,10 @@ public class NotePlayer
     	String noteinput=console.nextLine();
     	
     	int note1length=noteinput.length();
-    	String letter1=note1length.(1);
-    	String number1=noteinput.substring(2,4);
+    	
+    	
+    	String letter1= noteinput.substring(0,0);
+    	String number1=noteinput.substring(2,5);
     	
     	System.out.print("note letter: "+letter1+"duration: "+number1+" ");
     	
