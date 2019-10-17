@@ -23,16 +23,16 @@ public class NotePlayer
     public static void scan ()
     {
     	Scanner console = new Scanner (System.in);
-    	System.out.print("Enter a Note (A_600)");
+    	System.out.print("Enter a Note (x_yyy) ");
     	String noteinput=console.nextLine();
     	
     	int note1length=noteinput.length();
     	
     	
-    	String letter1= noteinput.substring(0,0);
+    	String letter1= noteinput.substring(0,1);
     	String number1=noteinput.substring(2,5);
     	
-    	System.out.print("note letter: "+letter1+"duration: "+number1+" ");
+    	System.out.print("note letter: "+letter1+", duration: "+number1+" ");
     	
 
     }
