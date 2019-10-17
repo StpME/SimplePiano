@@ -23,7 +23,7 @@ public class NotePlayer
     public static void scan ()
     {
     	Scanner console = new Scanner (System.in);
-    	System.out.print("Enter a Note (x_yyy) ");
+    	//System.out.print("Enter a Note (x_yyy) ");
     	String noteinput=console.nextLine();
     	
     	int note1length=noteinput.length();
