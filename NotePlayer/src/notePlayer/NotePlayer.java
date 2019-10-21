@@ -12,7 +12,7 @@ public class NotePlayer
     	// separate your code into multiple helper methods.  Your main method should then call those
     	// helper methods at the right places.  Organizing your code like this makes your code easier
     	// to read and debug, and helps avoid duplicating code.  
-    	scan();
+    	NotePlayer();
     	
     	
     	
@@ -20,27 +20,41 @@ public class NotePlayer
     	
     }
     
-    public static void scan ()
+    public static void NotePlayer ()
     {
     	Scanner console = new Scanner (System.in);
     	System.out.println("Enter a Note (x_yyy) ");
     	String noteinput = console.nextLine();
+    			
+    	int spaceindex = noteinput.indexOf("_");
     	
     	
-    	//int note=noteinput.substring(1,3);
+    	String duration="";
+    	String sharp="";
+    	String flat="";
     	
-    	
+    	if (noteinput.substring(2,3)=="#")
+    	{
+    		 duration = noteinput.substring(3,spaceindex);
+    	}
+    	else if (noteinput.substring(2,3)=="b")
+    	{
+    		 duration = noteinput.substring(3,spaceindex);
+    	}
+    	else 
+    	{
+    		duration = noteinput.substring(2,spaceindex);
+    	}
     	String note1 = noteinput.substring(0,1);
-    	int spaceindex = noteinput.indexOf(" ");
-    	String number1 = noteinput.substring(2,spaceindex);
     	
-    	System.out.print("note letter: "+note1+", duration: "+number1+" ");
+    	
+    	
+    	System.out.print("note letter: "+note1+", duration: "+duration+" ");
     	
 
     }
     
-    
-    
+
     
     
     
