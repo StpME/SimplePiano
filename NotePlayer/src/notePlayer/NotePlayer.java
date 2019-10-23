@@ -26,7 +26,7 @@ public class NotePlayer
     	System.out.println("Enter a Note (x_yyy) ");
     	String noteinput = console.nextLine();
     			
-    	int spaceindex = noteinput.indexOf("_");
+    	int spaceindex = noteinput.indexOf("_")+1;
     	
     	
     	String duration="";
@@ -35,15 +35,15 @@ public class NotePlayer
     	
     	if (noteinput.substring(2,3)=="#")
     	{
-    		 duration = noteinput.substring(3,spaceindex);
+    		 duration = noteinput.substring(spaceindex);
     	}
     	else if (noteinput.substring(2,3)=="b")
     	{
-    		 duration = noteinput.substring(3,spaceindex);
+    		 duration = noteinput.substring(spaceindex);
     	}
     	else 
     	{
-    		duration = noteinput.substring(2,spaceindex);
+    		duration = noteinput.substring(spaceindex);
     	}
     	String note1 = noteinput.substring(0,1);
     	
