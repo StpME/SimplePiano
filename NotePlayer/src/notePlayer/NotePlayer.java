@@ -22,19 +22,21 @@ public class NotePlayer
     
     public static void NotePlayer ()
     {
+    	//input + console
     	Scanner console = new Scanner (System.in);
     	System.out.println("Enter a Note (x_yyy) ");
     	String noteinput = console.nextLine();
-    			
+    	
+    	//time for duration and spaceindex for chunking notes		
     	int time = noteinput.indexOf("_")+1;
     	int spaceindex = noteinput.indexOf(" ");
-    	
-    	
+    	//String vars
+    	String note1 = noteinput.substring(0,1);
     	String duration="";
     	String sharp="";
     	String flat="";
     	
-    	if (noteinput.substring(2,3)=="#")
+    	if (noteinput.substring(1,2)=="#")
     	{
     		 duration = noteinput.substring(time, spaceindex);
     	}
@@ -42,11 +44,11 @@ public class NotePlayer
     	{
     		 duration = noteinput.substring(time, spaceindex);
     	}
-    	else 
+    	/*else 
     	{
     		duration = noteinput.substring(time, spaceindex);
-    	}
-    	String note1 = noteinput.substring(0,1);
+    	}*/
+
     	
     	
     	
