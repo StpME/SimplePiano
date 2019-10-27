@@ -36,18 +36,18 @@ public class NotePlayer
     	String sharp="";
     	String flat="";
     	
-    	if (noteinput.substring(1,2)=="#")
+    	if (noteinput.substring(1,2).equals ("#"))
     	{
     		 duration = noteinput.substring(time, spaceindex);
     	}
-    	else if (noteinput.substring(2,3)=="b")
+    	else if (noteinput.substring(1,2).equals("b"))
     	{
     		 duration = noteinput.substring(time, spaceindex);
     	}
-    	/*else 
-    	{
-    		duration = noteinput.substring(time, spaceindex);
-    	}*/
+    	//else 
+    	//{
+    	//	duration = noteinput.substring(time, spaceindex);
+    	//}
 
     	
     	
