@@ -78,7 +78,22 @@ public class NotePlayer
     	
     	note2=noteinput.substring(spaceindex+1,spaceindex+2);
     	
+    	int underscore2=noteinput.indexOf("_", noteinput.indexOf("_") + 1);
     	
+    	int spaceindex3=noteinput.indexOf(" ", noteinput.indexOf(" ") + 2);
+    	
+    	//finds second duration
+    	if (spaceindex3!=-1)
+    	{
+        	STRduration2 = noteinput.substring(underscore2+1, spaceindex3);
+    	}
+    	else
+    	{
+    		STRduration2 = noteinput.substring(underscore2+1);
+    	}
+    	duration2=Integer.parseInt(STRduration2);
+    	
+    	//second accidental
     	if (noteinput.substring(spaceindex+2,spaceindex+3).equals("#")|| noteinput.substring(spaceindex+2,spaceindex+3).equals("b"))
     	{
     		accidental2=noteinput.substring(spaceindex+2,spaceindex+3);
@@ -91,8 +106,7 @@ public class NotePlayer
     	
     	
     	
-    	
-    	
+    
     	
     	
     	
@@ -139,7 +153,7 @@ public class NotePlayer
 
     		
     	playNote(notenum,duration);
-    	if (!(notenum == notenum2)){playNote(notenum2,duration);}
+    	if (!(notenum == notenum2)){playNote(notenum2,duration2);}
     	
     	
     	
