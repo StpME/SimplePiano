@@ -84,7 +84,7 @@ public class NotePlayer
     		accidental2=noteinput.substring(spaceindex+2,spaceindex+3);
     		
     	}
-    	//notesymbol2=noteinput.substring();
+    	
 
     	
     	
@@ -139,11 +139,9 @@ public class NotePlayer
 
     		
     	playNote(notenum,duration);
-    	if (notenum2!=0) {playNote(notenum2,duration);}
+    	if (!(notenum == notenum2)){playNote(notenum2,duration);}
     	
     	
-    	//print test
-    	//System.out.print("note letter: "+ note +", duration: "+ duration +" ");
     	
      }
     
