@@ -139,7 +139,8 @@ public class NotePlayer
 
     		
     	playNote(notenum,duration);
-    	playNote(notenum2,duration);
+    	if (notenum2!=0) {playNote(notenum2,duration);}
+    	
     	
     	//print test
     	//System.out.print("note letter: "+ note +", duration: "+ duration +" ");
