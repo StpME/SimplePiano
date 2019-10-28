@@ -60,16 +60,16 @@ public class NotePlayer
     	
     	
     	//finds duration of note1
-    	if (spaceindex!=-1)
+    	 if (spaceindex!=-1)
     	{
         	STRduration = noteinput.substring(time, spaceindex);
     	}
-    	else
+    	else  
     	{
     		STRduration = noteinput.substring(time);
     	}
-    	duration=Integer.parseInt(STRduration);
-    	
+    	duration=Integer.parseInt(STRduration); 
+    
     	
     	//multiple notes (make more efficient)
     	String note2="";
@@ -79,19 +79,20 @@ public class NotePlayer
     	note2=noteinput.substring(spaceindex+1,spaceindex+2);
     	
     	int underscore2=noteinput.indexOf("_", noteinput.indexOf("_") + 1);
-    	
+    	int time2=(underscore2+1);
     	int spaceindex3=noteinput.indexOf(" ", noteinput.indexOf(" ") + 2);
     	
+    	
     	//finds second duration
-    	if (spaceindex3!=-1)
+    	/*if (spaceindex3!=-1)
     	{
-        	STRduration2 = noteinput.substring(underscore2+1, spaceindex3);
+        	STRduration2 = noteinput.substring(time2, spaceindex3);
     	}
-    	else
+    	else 
     	{
-    		STRduration2 = noteinput.substring(underscore2+1);
+    		STRduration2 = noteinput.substring(time2);
     	}
-    	duration2=Integer.parseInt(STRduration2);
+    	duration2=Integer.parseInt(STRduration2); */
     	
     	//second accidental
     	if (noteinput.substring(spaceindex+2,spaceindex+3).equals("#")|| noteinput.substring(spaceindex+2,spaceindex+3).equals("b"))
@@ -101,6 +102,12 @@ public class NotePlayer
     	}
     	
 
+    	//note 3 
+    	String note3="";
+    	String accidental3="";
+    	int notenum3=0;
+    	String STRduration3="";
+    	int duration3=0;
     	
     	
     	
@@ -153,7 +160,10 @@ public class NotePlayer
 
     		
     	playNote(notenum,duration);
-    	if (!(notenum == notenum2)){playNote(notenum2,duration2);}
+    	if (notenum != notenum2)
+    	{
+    		playNote(notenum2,duration2);
+    	}
     	
     	
     	
