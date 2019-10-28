@@ -84,15 +84,17 @@ public class NotePlayer
     	
     	
     	//finds second duration
-    	/*if (spaceindex3!=-1)
+    	if (spaceindex3!=-1)
     	{
         	STRduration2 = noteinput.substring(time2, spaceindex3);
     	}
-    	else 
-    	{
-    		STRduration2 = noteinput.substring(time2);
-    	}
-    	duration2=Integer.parseInt(STRduration2); */
+    	
+    	
+    	STRduration2 = noteinput.substring(time2);
+    	
+    	duration2=Integer.parseInt(STRduration2); 
+    	
+    	
     	
     	//second accidental
     	if (noteinput.substring(spaceindex+2,spaceindex+3).equals("#")|| noteinput.substring(spaceindex+2,spaceindex+3).equals("b"))
