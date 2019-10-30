@@ -25,156 +25,84 @@ public class NotePlayer
 		String noteinput = console.nextLine();
 	
 
-
-	
-
-
-    	//time for duration and spaceindex for chunking notes		
-    	int time = noteinput.indexOf("_")+1;
-    	int spaceindex = noteinput.indexOf(" ");
-
-
-    	//vars
-    	String accidental = "";
-    	
-    	String STRduration="";
-    	int duration=0;
-    	
-    	String STRduration2="";
-    	int duration2=0;
-    	
-    	String note="";
-    	int notenum=0;
-    	int notenum2=0;
-    	
-    	
-    	//finds note and any accidental
-    	if (noteinput.substring(1,2).equals("#") || noteinput.substring(1,2).equals("b"));
-    	{
-    		accidental=noteinput.substring(0,2);
-    		note=noteinput.substring(0,1);
-    	}
-    	
-    	
-
-    	
-    	
-    	//finds duration of note1
-    	 if (spaceindex!=-1)
-    	{
-        	STRduration = noteinput.substring(time, spaceindex);
-    	}
-    	else  
-    	{
-    		STRduration = noteinput.substring(time);
-    	}
-    	duration=Integer.parseInt(STRduration); 
+		//variables
+		String notesymbol=noteinput.substring(0,noteinput.length());
+		String note=noteinput.substring(0,1);
+		String accid="";
+		int space=noteinput.indexOf(" ");
+		int duration=0;
+		String d="";
+		int notenum=0;
+		
+		
+		//cuts previous note symbol and puts in noteinput
+		if (space !=-1)
+		{
+			while(space!=-1)
+			{		
+				//F#_483 Gb_281 A_38
+				if (noteinput.substring(1,2).equals("#") || noteinput.substring(1,2).equals("b"))
+				{
+					accid=noteinput.substring(1,2);
+					//System.out.println(accid);
+				}
+				
+				
+				
+				d=noteinput.substring(noteinput.indexOf("_")+1,space);
+				duration=Integer.parseInt(d);
+				note=noteinput.substring(0,1);
+				noteinput=noteinput.substring((space)+1);
+				//note=noteinput.substring(0,1);
+				//F_1000 Gb_4832 A_3481
+				space=noteinput.indexOf(" ");
+			/*	System.out.println(note);  
+				System.out.println(notesymbol);
+				System.out.println(noteinput);
+				System.out.println(duration); */
+				
+				
+				
+				
+		    	if (note.equals ("C")) {notenum=60;}
+		    	else if (note.equals ("D")) {notenum=62;}
+		    	else if (note.equals ("E")) {notenum=64;}
+		    	else if (note.equals ("F")) {notenum=65;}
+		    	else if (note.equals ("G")) {notenum=67;}
+		    	else if (note.equals ("A")) {notenum=69;}
+		    	else if (note.equals ("B")) {notenum=71;}
+		    	
+		    	playNote(notenum,duration);
+		    	
+			}
+		}
+		//for single notes
+		if (space == -1)
+		{
+			d=noteinput.substring(noteinput.indexOf("_")+1);
+			duration=Integer.parseInt(d);
+			note=noteinput.substring(0,1);
+			//System.out.print(note);
+	    	if (note.equals ("C")) {notenum=60;}
+	    	else if (note.equals ("D")) {notenum=62;}
+	    	else if (note.equals ("E")) {notenum=64;}
+	    	else if (note.equals ("F")) {notenum=65;}
+	    	else if (note.equals ("G")) {notenum=67;}
+	    	else if (note.equals ("A")) {notenum=69;}
+	    	else if (note.equals ("B")) {notenum=71;}
+	    	
+	    	playNote(notenum,duration);
+		}
     
-    	
-    	//multiple notes (make more efficient)
-    	String note2="";
-    	String notesymbol2="";
-    	String accidental2="";
-    	
-    	note2=noteinput.substring(spaceindex+1,spaceindex+2);
-    	
-    	int underscore2=noteinput.indexOf("_", noteinput.indexOf("_") + 1);
-    	int time2=(underscore2+1);
-    	int spaceindex3=noteinput.indexOf(" ", noteinput.indexOf(" ") + 2);
-    	
-    	
-    	//finds second duration
-    	if (spaceindex3!=-1)
-    	{
-        	STRduration2 = noteinput.substring(time2, spaceindex3);
-    	}
-    	
-    	
-    	STRduration2 = noteinput.substring(time2);
-    	
-    	duration2=Integer.parseInt(STRduration2); 
-    	
-    	
-    	
-    	//second accidental
-    	if (noteinput.substring(spaceindex+2,spaceindex+3).equals("#")|| noteinput.substring(spaceindex+2,spaceindex+3).equals("b"))
-    	{
-    		accidental2=noteinput.substring(spaceindex+2,spaceindex+3);
-    		
-    	}
-    	
-
-    	//note 3 
-    	String note3="";
-    	String accidental3="";
-    	int notenum3=0;
-    	String STRduration3="";
-    	int duration3=0;
-    	
-    	
-    	
-    	
-    	
+    }
+  
     
+    /*public static void MIDIconv()
+    {
     	
-    	
-    	
-    	
-    	
-    	
-    	//Note Letter (make a lot more efficient)
-    	if (note.equals ("C"))
-    	{
-    		notenum=60; 
-    	}
-    	else if (note.equals ("D"))
-    	{
-    		notenum=62; 
-    	}
-    	else if (note.equals ("E"))
-    	{
-    		notenum=64; 
-    	}
-    	else if (note.equals ("F"))
-    	{
-    		notenum=65; 
-    	}
-    	else if (note.equals ("G"))
-    	{
-    		notenum=67; 
-    	}
-    	else if (note.equals ("A"))
-    	{
-    		notenum=69; 
-    	}
-    	else if (note.equals ("B"))
-    	{
-    		notenum=71; 
-    	}
-    	
-    	if (note2.equals ("C")) {notenum2=60;}
-    	else if (note2.equals ("D")) {notenum2=62;}
-    	else if (note2.equals ("E")) {notenum2=64;}
-    	else if (note2.equals ("F")) {notenum2=65;}
-    	else if (note2.equals ("G")) {notenum2=67;}
-    	else if (note2.equals ("A")) {notenum2=69;}
-    	else if (note2.equals ("B")) {notenum2=71;}
-
-    		
-    	playNote(notenum,duration);
-    	if (notenum != notenum2)
-    	{
-    		playNote(notenum2,duration2);
-    	}
-    	
-    	
-    	
-     }
-    
-    
-    
-    
-    
+    	if (.equals("C"))
+    }
+    */
 //-------------------------------------------------------------------//
     /**
      * WARNING!!!  DO NOT MODIFY THIS METHOD.
