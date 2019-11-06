@@ -26,7 +26,7 @@ public class NotePlayer
 	
 
 		//variables
-		String notesymbol=noteinput.substring(0,noteinput.length());
+		String noteSym=noteinput.substring(0,noteinput.length());
 		String note=noteinput.substring(0,1);
 		String accidental="";
 		String octave="";
@@ -42,19 +42,14 @@ public class NotePlayer
 			while(space!=-1)
 			{		
 				//Accidentals
-				if (noteinput.substring(1,2).equals("#") || noteinput.substring(1,2).equals("b"))
-				{
-					accidental=noteinput.substring(1,2);
-				} 
 				if (noteinput.substring(1,2).equals("#"))
 				{
 					notenum+=1;
-				//	accidental=noteinput.substring(1,2);
+					
 				}
 				else if (noteinput.substring(1,2).equals("b"))
 				{
 					notenum-=1;
-				//	accidental=noteinput.substring(1,2);
 
 				}
 				
@@ -64,6 +59,7 @@ public class NotePlayer
 				d=noteinput.substring(noteinput.indexOf("_")+1,space);
 				duration=Integer.parseInt(d);
 				note=noteinput.substring(0,1);
+				noteSym=noteinput.substring(noteinput.indexOf(note)+1);
 				noteinput=noteinput.substring((space)+1);
 				space=noteinput.indexOf(" ");
 
