@@ -28,24 +28,36 @@ public class NotePlayer
 		//variables
 		String notesymbol=noteinput.substring(0,noteinput.length());
 		String note=noteinput.substring(0,1);
-		String accid="";
+		String accidental="";
+		String octave="";
 		int space=noteinput.indexOf(" ");
 		int duration=0;
 		String d="";
 		int notenum=0;
 		
-		
+		//for multiple notes
 		//cuts previous note symbol and puts in noteinput
 		if (space !=-1)
 		{
 			while(space!=-1)
 			{		
-				//F#_483 Gb_281 A_38
+				//Accidentals
 				if (noteinput.substring(1,2).equals("#") || noteinput.substring(1,2).equals("b"))
 				{
-					accid=noteinput.substring(1,2);
-					//System.out.println(accid);
+					accidental=noteinput.substring(1,2);
+				} 
+				if (noteinput.substring(1,2).equals("#"))
+				{
+					notenum+=1;
+				//	accidental=noteinput.substring(1,2);
 				}
+				else if (noteinput.substring(1,2).equals("b"))
+				{
+					notenum-=1;
+				//	accidental=noteinput.substring(1,2);
+
+				}
+				
 				
 				
 				
@@ -53,14 +65,8 @@ public class NotePlayer
 				duration=Integer.parseInt(d);
 				note=noteinput.substring(0,1);
 				noteinput=noteinput.substring((space)+1);
-				//note=noteinput.substring(0,1);
-				//F_1000 Gb_4832 A_3481
 				space=noteinput.indexOf(" ");
-			/*	System.out.println(note);  
-				System.out.println(notesymbol);
-				System.out.println(noteinput);
-				System.out.println(duration); */
-				
+
 				
 				
 				
@@ -72,17 +78,28 @@ public class NotePlayer
 		    	else if (note.equals ("A")) {notenum=69;}
 		    	else if (note.equals ("B")) {notenum=71;}
 		    	
+		    	if (!(accidental.equals("")))
+		    	{
+		    		if (accidental.equals("#"))
+		    		{
+		    			notenum+=1;
+		    			
+		    		}
+		    		else
+		    		{
+		    			notenum-=1;
+		    		}
+		    		
+		    	}
 		    	playNote(notenum,duration);
-		    	
 			}
-		}
+		
 		//for single notes
 		if (space == -1)
 		{
 			d=noteinput.substring(noteinput.indexOf("_")+1);
 			duration=Integer.parseInt(d);
 			note=noteinput.substring(0,1);
-			//System.out.print(note);
 	    	if (note.equals ("C")) {notenum=60;}
 	    	else if (note.equals ("D")) {notenum=62;}
 	    	else if (note.equals ("E")) {notenum=64;}
@@ -91,18 +108,26 @@ public class NotePlayer
 	    	else if (note.equals ("A")) {notenum=69;}
 	    	else if (note.equals ("B")) {notenum=71;}
 	    	
+	    	if (!(accidental.equals("")))
+	    	{
+	    		if (accidental.equals("#"))
+	    		{
+	    			notenum+=1;
+	    			
+	    		}
+	    		else if (noteinput.substring(1,2).equals("b"))
+	    		{
+	    			notenum-=1;
+	    		}
+	    		
+	    	}
 	    	playNote(notenum,duration);
+	    	
 		}
-    
-    }
-  
-    
-    /*public static void MIDIconv()
-    {
-    	
-    	if (.equals("C"))
-    }
-    */
+	}
+}
+
+ 
 //-------------------------------------------------------------------//
     /**
      * WARNING!!!  DO NOT MODIFY THIS METHOD.
