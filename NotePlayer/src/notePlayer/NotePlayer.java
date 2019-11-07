@@ -1,3 +1,4 @@
+
 package notePlayer;
 
 import core.MidiWrapper;
@@ -26,9 +27,9 @@ public class NotePlayer
 	
 
 		//variables
-		String noteSym=noteinput.substring(0,noteinput.length());
+		String CRnote=noteinput.substring(0,noteinput.length());
 		String note=noteinput.substring(0,1);
-		String accidental="";
+		int accidental=0;
 		String octave="";
 		int space=noteinput.indexOf(" ");
 		int duration=0;
@@ -44,14 +45,16 @@ public class NotePlayer
 				//Accidentals
 				if (noteinput.substring(1,2).equals("#"))
 				{
-					notenum+=1;
+					accidental=1; //noteinput.substring(1,2);
 					
 				}
 				else if (noteinput.substring(1,2).equals("b"))
 				{
-					notenum-=1;
+					accidental=-1; //noteinput.substring(1,2);
+					
 
 				}
+				
 				
 				
 				
@@ -59,7 +62,6 @@ public class NotePlayer
 				d=noteinput.substring(noteinput.indexOf("_")+1,space);
 				duration=Integer.parseInt(d);
 				note=noteinput.substring(0,1);
-				noteSym=noteinput.substring(noteinput.indexOf(note)+1);
 				noteinput=noteinput.substring((space)+1);
 				space=noteinput.indexOf(" ");
 
@@ -74,28 +76,42 @@ public class NotePlayer
 		    	else if (note.equals ("A")) {notenum=69;}
 		    	else if (note.equals ("B")) {notenum=71;}
 		    	
-		    	if (!(accidental.equals("")))
-		    	{
-		    		if (accidental.equals("#"))
+		    	if (accidental==1)
 		    		{
 		    			notenum+=1;
-		    			
+		    			playNote(notenum,duration);
 		    		}
-		    		else
-		    		{
+	    		else if (accidental==-1)
+	    			{
 		    			notenum-=1;
-		    		}
-		    		
-		    	}
-		    	playNote(notenum,duration);
-			}
-		
+		    			playNote(notenum,duration);
+	    			}
+	    		else 
+	    		{
+	    			playNote(notenum,duration);	
+	    		}
+		    	accidental=0;
+			} 
+		}
+	    //	C#_602 Bb_482 F_1000 G_947
+
 		//for single notes
 		if (space == -1)
 		{
+			if (noteinput.substring(1,2).equals("#"))
+			{
+				accidental=1; //noteinput.substring(1,2);
+				
+			}
+			else if (noteinput.substring(1,2).equals("b"))
+			{
+				accidental=-1; //noteinput.substring(1,2);
+			}
+		
 			d=noteinput.substring(noteinput.indexOf("_")+1);
 			duration=Integer.parseInt(d);
 			note=noteinput.substring(0,1);
+			
 	    	if (note.equals ("C")) {notenum=60;}
 	    	else if (note.equals ("D")) {notenum=62;}
 	    	else if (note.equals ("E")) {notenum=64;}
@@ -104,23 +120,29 @@ public class NotePlayer
 	    	else if (note.equals ("A")) {notenum=69;}
 	    	else if (note.equals ("B")) {notenum=71;}
 	    	
-	    	if (!(accidental.equals("")))
-	    	{
-	    		if (accidental.equals("#"))
+	    		if (accidental==1)
 	    		{
+	    			
 	    			notenum+=1;
+	    			playNote(notenum,duration);
 	    			
 	    		}
-	    		else if (noteinput.substring(1,2).equals("b"))
+	    		else if (accidental==-1)
 	    		{
+	    			
 	    			notenum-=1;
+	    			playNote(notenum,duration);
 	    		}
-	    		
-	    	}
-	    	playNote(notenum,duration);
+	    		else 
+	    		{
+	    			playNote(notenum,duration);
+	    		}
+	    		accidental=0;
+	    	
+	    //	playNote(notenum,duration);
 	    	
 		}
-	}
+	 
 }
 
  
