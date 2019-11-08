@@ -1,5 +1,4 @@
 
-
 package notePlayer;
 
 import core.MidiWrapper;
@@ -54,35 +53,34 @@ public class NotePlayer
 				
 				
 				//octave check
-				if (!(noteinput.substring(1,2).equals("_")) && accidental !=0)
+				if (!(noteinput.substring(1,2).equals("_"))  && accidental !=0)
 				{
 					if (accidental == 1 || accidental == -1)
 					{
-						if (noteinput.substring(1,2).equals("-"))
+						if (noteinput.substring(2,3).equals("-"))
 						{
 							octave=Integer.parseInt(noteinput.substring(2,noteinput.indexOf("_")));
-						//	System.out.println(octave);
+							System.out.println(octave);
 						}
-						else if (!noteinput.substring(1,2).equals("#") || !noteinput.substring(1,2).equals("b"))
+					/*	else
 						{
 							octave=Integer.parseInt(noteinput.substring(2,noteinput.indexOf("_")));
-							//System.out.println(octave);
-						}
+							System.out.println(octave);
+						} */
+
 					}
-				}
-				else// if (accidental==0)
+					else if (accidental==0)
 					{
 						if (noteinput.substring(1,2).equals("-"))
 						{
 							octave=Integer.parseInt(noteinput.substring(1,noteinput.indexOf("_")));
-						//	System.out.println(octave);
+							System.out.println(octave);
 						}
-						else if (!noteinput.substring(1,2).equals("#") || !noteinput.substring(1,2).equals("b"))
-						{
-							octave=Integer.parseInt(noteinput.substring(2,noteinput.indexOf("_")));
-						//	System.out.println(octave);
-						}
+						
+
 					} 
+				
+				}
 				
 				
 				
@@ -144,43 +142,34 @@ public class NotePlayer
 			
 			
 			//octave check
-			if (!(noteinput.substring(1,2).equals("_")) && !(noteinput.substring(2,3).equals("_")) && accidental !=0)
+			if (!(noteinput.substring(1,2).equals("_"))) //&& accidental !=0)
 			{
 				if (accidental == 1 || accidental == -1)
 				{
 					if (noteinput.substring(1,2).equals("-"))
 					{
 						octave=Integer.parseInt(noteinput.substring(2,noteinput.indexOf("_")));
-						//System.out.println(octave);
+						System.out.println(octave);
 					}
-					else if (!(noteinput.substring(1,noteinput.indexOf("_")).equals("#") || !noteinput.substring(1,noteinput.indexOf("_")).equals("b")))
-					{
-						octave=Integer.parseInt(noteinput.substring(1,noteinput.indexOf("_")));
-						//System.out.println(octave);
-					} 
-					else
+				
+				/*	else //if (noteinput.substring(1,2).equals("#") || noteinput.substring(1,2).equals("b"))
 					{
 						octave=Integer.parseInt(noteinput.substring(2,noteinput.indexOf("_")));
-						//System.out.println(octave);
-					}
+						System.out.println(octave);
+					}  */
+				
 				}
-			}
-			else if (accidental==0)
+				else if (accidental==0)
 				{
 					if (noteinput.substring(1,2).equals("-"))
 					{
 						octave=Integer.parseInt(noteinput.substring(1,noteinput.indexOf("_")));
-						//System.out.println(octave);
-					}
-					else if (!noteinput.substring(1,2).equals("#") || !noteinput.substring(1,2).equals("b"))
-					{
-						octave=Integer.parseInt(noteinput.substring(2,noteinput.indexOf("_")));
-						//System.out.println(octave);
+						System.out.println(octave);
 					}
 					
 				} 
 			
-			
+			}
 			
 		
 			d=noteinput.substring(noteinput.indexOf("_")+1);
@@ -255,4 +244,3 @@ public class NotePlayer
 	}
     
 }
-
