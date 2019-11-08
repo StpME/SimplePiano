@@ -1,4 +1,5 @@
 
+
 package notePlayer;
 
 import core.MidiWrapper;
@@ -13,24 +14,20 @@ public class NotePlayer
     	// separate your code into multiple helper methods.  Your main method should then call those
     	// helper methods at the right places.  Organizing your code like this makes your code easier
     	// to read and debug, and helps avoid duplicating code.  
-    	NotePlayer();
-    	
-    	
+    	NotePlayer();	
     }
-    
+  
     public static void NotePlayer ()
     {
 		//input + console
 		Scanner console = new Scanner (System.in);
 		System.out.println("Enter a Note (x_yyy) ");
 		String noteinput = console.nextLine();
-	
 
-		//variables
-		String CRnote=noteinput.substring(0,noteinput.length());
+		//variables initialize
 		String note=noteinput.substring(0,1);
 		int accidental=0;
-		String octave="";
+		int octave=0;
 		int space=noteinput.indexOf(" ");
 		int duration=0;
 		String d="";
@@ -45,14 +42,49 @@ public class NotePlayer
 				//Accidentals
 				if (noteinput.substring(1,2).equals("#"))
 				{
-					accidental=1; //noteinput.substring(1,2);
+					accidental=1; 
+					
 					
 				}
 				else if (noteinput.substring(1,2).equals("b"))
 				{
-					accidental=-1; //noteinput.substring(1,2);
-					
+					accidental=-1; 
+				}
+				
+				
+				
+				//octave check
+				if (!(noteinput.substring(1,2).equals("_"))) // && accidental !=0)
+				{
+					if (accidental == 1 || accidental == -1)
+					{
+						if (noteinput.substring(2,3).equals("-"))
+						{
+							octave=Integer.parseInt(noteinput.substring(2,noteinput.indexOf("_")));
+							System.out.println(octave);
+						}
+						else 
+						{
+							octave=Integer.parseInt(noteinput.substring(2,noteinput.indexOf("_")));
+							System.out.println(octave);
+						} 
 
+					}
+					else if (accidental==0)
+					{
+						if (noteinput.substring(1,2).equals("-"))
+						{
+							octave=Integer.parseInt(noteinput.substring(1,noteinput.indexOf("_")));
+							System.out.println(octave);
+						}
+						else 
+						{
+							octave=Integer.parseInt(noteinput.substring(1,noteinput.indexOf("_")));
+							System.out.println(octave);
+						}
+
+					} 
+				
 				}
 				
 				
@@ -78,35 +110,74 @@ public class NotePlayer
 		    	
 		    	if (accidental==1)
 		    		{
-		    			notenum+=1;
+		    			notenum+=12*octave+1;
 		    			playNote(notenum,duration);
 		    		}
 	    		else if (accidental==-1)
 	    			{
-		    			notenum-=1;
+		    			
+		    			notenum+=12*octave-1;
 		    			playNote(notenum,duration);
 	    			}
 	    		else 
 	    		{
+	    			notenum+=12*octave;
 	    			playNote(notenum,duration);	
 	    		}
 		    	accidental=0;
+		    	octave=0;
 			} 
 		}
-	    //	C#_602 Bb_482 F_1000 G_947
 
-		//for single notes
+		//for single notes and/or last note
 		if (space == -1)
 		{
 			if (noteinput.substring(1,2).equals("#"))
 			{
-				accidental=1; //noteinput.substring(1,2);
+				accidental=1; 
 				
 			}
 			else if (noteinput.substring(1,2).equals("b"))
 			{
-				accidental=-1; //noteinput.substring(1,2);
+				accidental=-1;
 			}
+			
+			
+			
+			
+			
+			//octave check
+			if (!(noteinput.substring(1,2).equals("_")) && accidental !=0)
+			{
+				if (accidental == 1 || accidental == -1)
+				{
+					if (noteinput.substring(1,2).equals("-"))
+					{
+						octave=Integer.parseInt(noteinput.substring(2,noteinput.indexOf("_")));
+						System.out.println(octave);
+					}
+				else 
+					{
+						octave=Integer.parseInt(noteinput.substring(2,noteinput.indexOf("_")));
+						System.out.println(octave);
+					}  
+				}
+				else if (accidental==0)
+				{
+					if (noteinput.substring(1,2).equals("-"))
+					{
+						octave=Integer.parseInt(noteinput.substring(1,noteinput.indexOf("_")));
+						System.out.println(octave);
+					}
+					else 
+					{
+						octave=Integer.parseInt(noteinput.substring(1,noteinput.indexOf("_")));
+						System.out.println(octave);
+					} 
+				} 
+			
+			}
+			
 		
 			d=noteinput.substring(noteinput.indexOf("_")+1);
 			duration=Integer.parseInt(d);
@@ -123,26 +194,26 @@ public class NotePlayer
 	    		if (accidental==1)
 	    		{
 	    			
-	    			notenum+=1;
+	    			
+	    			notenum+=12*octave+1;
 	    			playNote(notenum,duration);
 	    			
 	    		}
 	    		else if (accidental==-1)
 	    		{
 	    			
-	    			notenum-=1;
+	    			
+	    			notenum+=12*octave-1;
 	    			playNote(notenum,duration);
 	    		}
 	    		else 
 	    		{
+	    			notenum+=12*octave;
 	    			playNote(notenum,duration);
 	    		}
 	    		accidental=0;
-	    	
-	    //	playNote(notenum,duration);
-	    	
-		}
-	 
+	    		octave=0;	
+		}	 
 }
 
  
@@ -180,3 +251,4 @@ public class NotePlayer
 	}
     
 }
+
