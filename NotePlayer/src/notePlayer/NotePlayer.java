@@ -21,10 +21,11 @@ public class NotePlayer
 		//input + console
 		Scanner console = new Scanner (System.in);
 		System.out.println("Enter a Note (x_yyy) ");
-		String noteinput = console.nextLine();
+		String orig = console.nextLine();
 
 		//variables initialize
-		String note=noteinput.substring(0,1);
+		String note="";
+		String noteinput=orig;
 		int accidental=0;
 		int octave=0;
 		int space=noteinput.indexOf(" ");
@@ -38,61 +39,77 @@ public class NotePlayer
 		{
 			while(space!=-1)
 			{		
-				//Accidentals
-				if (noteinput.substring(1,2).equals("#"))
+				note=noteinput.substring(0,1);
+				noteinput=noteinput.substring(1);
+				//System.out.println(noteinput);
+				//accidentals
+				if (noteinput.substring(0,1).equals("#"))
 				{
 					accidental=1; 
-					
+					noteinput=noteinput.substring(1);
+
 					
 				}
-				else if (noteinput.substring(1,2).equals("b"))
+				else if (noteinput.substring(0,1).equals("b"))
 				{
 					accidental=-1; 
+					noteinput=noteinput.substring(1);
+					
 				}
-				
-				
-				
+				//System.out.println(noteinput+" acc");
 				//octave check
-				if (!(noteinput.substring(1,2).equals("_"))  && accidental !=0)
+				if (accidental == -1 || accidental == 1)
 				{
-					if (accidental == 1 || accidental == -1)
+					if (noteinput.indexOf("_")!=0)
 					{
-						if (noteinput.substring(2,3).equals("-"))
+						if (noteinput.indexOf("-")==0)
 						{
-							octave=Integer.parseInt(noteinput.substring(2,noteinput.indexOf("_")));
-							System.out.println(octave);
+							octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+							noteinput=noteinput.substring(2);
 						}
-					/*	else
+						else 
 						{
-							octave=Integer.parseInt(noteinput.substring(2,noteinput.indexOf("_")));
-							System.out.println(octave);
-						} */
-
+							octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+							noteinput=noteinput.substring(1);
+						}
 					}
-					else if (accidental==0)
+				}
+				else 
+				{
+					if (noteinput.indexOf("_")!=0)
 					{
-						if (noteinput.substring(1,2).equals("-"))
+						if (noteinput.indexOf("-")==0)
 						{
-							octave=Integer.parseInt(noteinput.substring(1,noteinput.indexOf("_")));
-							System.out.println(octave);
+							octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+							noteinput=noteinput.substring(1);
 						}
-						
-
-					} 
+						else 
+						{
+							octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+							noteinput=noteinput.substring(0);
+						}
+					}
+				}
+					
+				//System.out.println(noteinput+" oct");
 				
+				
+				space=noteinput.indexOf(" ");
+				if (space!=-1)
+				{
+					d=noteinput.substring(noteinput.indexOf("_")+1,space);
+					duration=Integer.parseInt(d);
+				}
+				else 
+				{
+					d=noteinput.substring(noteinput.indexOf("_")+1);
+					duration=Integer.parseInt(d);
 				}
 				
 				
-				
-				
-				
-				d=noteinput.substring(noteinput.indexOf("_")+1,space);
-				duration=Integer.parseInt(d);
-				note=noteinput.substring(0,1);
-				noteinput=noteinput.substring((space)+1);
-				space=noteinput.indexOf(" ");
-
-				
+				//next note
+				noteinput=noteinput.substring(space+1);
+				//System.out.println(noteinput+" next");
 				
 				
 		    	if (note.equals ("C")) {notenum=60;}
@@ -110,7 +127,6 @@ public class NotePlayer
 		    		}
 	    		else if (accidental==-1)
 	    			{
-		    			
 		    			notenum+=12*octave-1;
 		    			playNote(notenum,duration);
 	    			}
@@ -121,60 +137,62 @@ public class NotePlayer
 	    		}
 		    	accidental=0;
 		    	octave=0;
+		    	
 			} 
 		}
+		
+		
+		
 
-		//for single notes and/or last note
-		if (space == -1)
+		//////////////////////////for single notes and/or last note//////////////////////////
+	/*	else if (space == -1)
 		{
-			if (noteinput.substring(1,2).equals("#"))
+			
+			note=noteinput.substring(0,1);
+			noteinput=noteinput.substring(1);
+		//	System.out.println(noteinput+" after note");
+			//accidentals
+			if (noteinput.substring(0,1).equals("#"))
 			{
 				accidental=1; 
+				noteinput=noteinput.substring(1);
+
 				
 			}
-			else if (noteinput.substring(1,2).equals("b"))
+			else if (noteinput.substring(0,1).equals("b"))
 			{
-				accidental=-1;
+				accidental=-1; 
+				noteinput=noteinput.substring(1);
+				
 			}
-			
-			
-			
+		//	System.out.println(noteinput+" after acc");
 			
 			
 			//octave check
-			if (!(noteinput.substring(1,2).equals("_"))) //&& accidental !=0)
+			if (accidental == -1 || accidental == 1)
 			{
-				if (accidental == 1 || accidental == -1)
+				if (noteinput.indexOf("_")!=0)
 				{
-					if (noteinput.substring(1,2).equals("-"))
+					if (noteinput.indexOf("-")==0)
 					{
-						octave=Integer.parseInt(noteinput.substring(2,noteinput.indexOf("_")));
-						System.out.println(octave);
+						octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+						noteinput=noteinput.substring(2);
 					}
-				
-				/*	else //if (noteinput.substring(1,2).equals("#") || noteinput.substring(1,2).equals("b"))
+					else 
 					{
-						octave=Integer.parseInt(noteinput.substring(2,noteinput.indexOf("_")));
-						System.out.println(octave);
-					}  */
-				
+						octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+						noteinput=noteinput.substring(1);
+					}
 				}
-				else if (accidental==0)
-				{
-					if (noteinput.substring(1,2).equals("-"))
-					{
-						octave=Integer.parseInt(noteinput.substring(1,noteinput.indexOf("_")));
-						System.out.println(octave);
-					}
-					
-				} 
-			
 			}
 			
-		
+			//System.out.println(noteinput+" after oct ");
+			
+			
+			
 			d=noteinput.substring(noteinput.indexOf("_")+1);
 			duration=Integer.parseInt(d);
-			note=noteinput.substring(0,1);
+			
 			
 	    	if (note.equals ("C")) {notenum=60;}
 	    	else if (note.equals ("D")) {notenum=62;}
@@ -206,7 +224,7 @@ public class NotePlayer
 	    		}
 	    		accidental=0;
 	    		octave=0;	
-		}	 
+		}	 */
 }
 
  
