@@ -145,7 +145,7 @@ public class NotePlayer
 		
 
 		//////////////////////////for single notes and/or last note//////////////////////////
-	/*	else if (space == -1)
+		else if (space == -1)
 		{
 			
 			note=noteinput.substring(0,1);
@@ -185,6 +185,23 @@ public class NotePlayer
 					}
 				}
 			}
+			else 
+			{
+				if (noteinput.indexOf("_")!=0)
+				{
+					if (noteinput.indexOf("-")==0)
+					{
+						octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+						noteinput=noteinput.substring(1);
+					}
+					else 
+					{
+						octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+						noteinput=noteinput.substring(0);
+					}
+				}
+			}
+			
 			
 			//System.out.println(noteinput+" after oct ");
 			
@@ -224,7 +241,7 @@ public class NotePlayer
 	    		}
 	    		accidental=0;
 	    		octave=0;	
-		}	 */
+		}	 
 }
 
  
