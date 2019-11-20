@@ -1,3 +1,4 @@
+
 package notePlayer;
 
 import core.MidiWrapper;
@@ -6,143 +7,237 @@ public class NotePlayer
 
 {
     public static void main(String[] args)
-    {
-    // This is where you will begin writing your code, and this is where the program will start.
-    // Although you can place all of your code here in main, we strongly suggest that you
-    // separate your code into multiple helper methods.  Your main method should then call those
-    // helper methods at the right places.  Organizing your code like this makes your code easier
-    // to read and debug, and helps avoid duplicating code.  
-    NotePlayer();
-   
-   
+    { 
+    	NotePlayer();	
     }
-   
+    
     public static void NotePlayer ()
     {
-		//input + console
+		
 		Scanner console = new Scanner (System.in);
 		System.out.println("Enter a Note (x_yyy) ");
-		String noteinput = console.nextLine();
+		String orig = console.nextLine();
 
+		String note="";
+		String noteinput=orig;
+		int accidental=0;
+		int octave=0;
+		int space=noteinput.indexOf(" ");
+		int duration=0;
+		String d="";
+		
+		//for multiple notes
+		if (space !=-1)
+		{
+			while(space!=-1)
+			{		
+				note=noteinput.substring(0,1);
+				noteinput=noteinput.substring(1);
+				//accidentals
+				if (noteinput.substring(0,1).equals("#"))
+				{
+					accidental=1; 
+					noteinput=noteinput.substring(1);
+				}
+				else if (noteinput.substring(0,1).equals("b"))
+				{
+					accidental=-1; 
+					noteinput=noteinput.substring(1);
+					
+				}
+				//octaves
+				if (accidental == -1 || accidental == 1)
+				{
+					if (noteinput.indexOf("_")!=0)
+					{
+						if (noteinput.indexOf("-")==0)
+						{
+							octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+							noteinput=noteinput.substring(2);
+						}
+						else 
+						{
+							octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+							noteinput=noteinput.substring(1);
+						}
+					}
+				}
+				else 
+				{
+					if (noteinput.indexOf("_")!=0)
+					{
+						if (noteinput.indexOf("-")==0)
+						{
+							octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+							noteinput=noteinput.substring(1);
+						}
+						else 
+						{
+							octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+							noteinput=noteinput.substring(0);
+						}
+					}
+				}		
+				space=noteinput.indexOf(" ");
+				if (space!=-1)
+				{
+					d=noteinput.substring(noteinput.indexOf("_")+1,space);
+					duration=Integer.parseInt(d);
+				}
+				else 
+				{
+					d=noteinput.substring(noteinput.indexOf("_")+1);
+					duration=Integer.parseInt(d);
+				}
+				
+				
+				//next note
+				noteinput=noteinput.substring(space+1);				
+				
+				NM(note,accidental,octave,duration);			
 
+		    		accidental=0;
+		    		octave=0;	
+			} 
+		}
 
+		//////////////////////////for single notes and/or last note//////////////////////////
+		else if (space == -1)
+		{
+			
+			note=noteinput.substring(0,1);
+			noteinput=noteinput.substring(1);
+			//accidentals
+			if (noteinput.substring(0,1).equals("#"))
+			{
+				accidental=1; 
+				noteinput=noteinput.substring(1);	
+			}
+			else if (noteinput.substring(0,1).equals("b"))
+			{
+				accidental=-1; 
+				noteinput=noteinput.substring(1);
+				
+			}			
+			
+			//octaves
+			if (accidental == -1 || accidental == 1)
+			{
+				if (noteinput.indexOf("_")!=0)
+				{
+					if (noteinput.indexOf("-")==0)
+					{
+						octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+						noteinput=noteinput.substring(2);
+					}
+					else 
+					{
+						octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+						noteinput=noteinput.substring(1);
+					}
+				}
+			}
+			else 
+			{
+				if (noteinput.indexOf("_")!=0)
+				{
+					if (noteinput.indexOf("-")==0)
+					{
+						octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+						noteinput=noteinput.substring(1);
+					}
+					else 
+					{
+						octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+						noteinput=noteinput.substring(0);
+					}
+				}
+			}
+			d=noteinput.substring(noteinput.indexOf("_")+1);
+			duration=Integer.parseInt(d);
+			
+			NM(note,accidental,octave,duration);			
+	    	accidental=0;
+	    	octave=0;	
+		}	 
+   }  //////End NotePlayer method		
 
-
-	
-	    //time for duration and spaceindex for chunking notes
-	    int time = noteinput.indexOf("_")+1;
-	    int spaceindex = noteinput.indexOf(" ");
-	
-	
-	    //vars
-	    String accidental = "";
-	    String STRduration="";
-	    int duration=0;
-	    String note="";
-	    int notenum=0;
-	    int notenum2=0;
-	   
-	   
-	    //finds note and any accidental
-	    if (noteinput.substring(1,2).equals("#") || noteinput.substring(1,2).equals("b"));
-	    {
-	    	accidental=noteinput.substring(0,2);
-	    	note=noteinput.substring(0,1);
-	    }
-	   
-	   
-	
-	   
-	   
-	    //finds duration of note1
-	    if (spaceindex!=-1)
-	    {
-	        STRduration = noteinput.substring(time, spaceindex);
-	    }
-	    else
-	    {
-	    STRduration = noteinput.substring(time);
-	    }
-	    duration=Integer.parseInt(STRduration);
-	    //multiple notes
-	    String note2="";
-	    String note3="";
-	    note2=noteinput.substring(spaceindex+1,spaceindex+2);
-	   
-	   
-	   
-	    //Note Letter
-	    if (note.equals ("C"))
-	    {
-	    	notenum=60;
-	    }
-	    else if (note.equals ("D"))
-	    {
-	    	notenum=62;
-	    }
-	    else if (note.equals ("E"))
-	    {
-	    	notenum=64;
-	    }
-	    else if (note.equals ("F"))
-	    {
-	    	notenum=65;
-	    }
-	    else if (note.equals ("G"))
-	    {
-	    	notenum=67;
-	    }
-	    else if (note.equals ("A"))
-	    {
-	    	notenum=69;
-	    }
-	    else if (note.equals ("B"))
-	    {
-	    	notenum=71;
-	    }
-	   
-	   
-	   
-	    //print test
-	    //System.out.print("note letter: "+ note +", duration: "+ duration +" ");
-	    playNote(notenum,duration);
-     }
-   
-   
-   
-   
-   
+    
+    //notenum table and playnote
+    public static void NM(String note, int accidental, int octave, int duration)
+    {
+    	int notenum=0;
+    	if (note.equals ("C")) {notenum=60;}
+    	else if (note.equals ("D")) {notenum=62;}
+    	else if (note.equals ("E")) {notenum=64;}
+    	else if (note.equals ("F")) {notenum=65;}
+    	else if (note.equals ("G")) {notenum=67;}
+    	else if (note.equals ("A")) {notenum=69;}
+    	else if (note.equals ("B")) {notenum=71;}
+    	
+    		if (accidental==1)
+    		{
+    			notenum+=12*octave+1;
+    			playNote(notenum,duration);
+    		}
+    		else if (accidental==-1)
+    		{
+    			
+    			
+    			notenum+=12*octave-1;
+    			playNote(notenum,duration);
+    		}
+    		else 
+    		{
+    			notenum+=12*octave;
+    			playNote(notenum,duration);
+    		}
+    		
+    }
+    public static void ACC(int accidental, String noteinput)
+    {
+    	if (noteinput.substring(0,1).equals("#"))
+		{
+			accidental=1; 
+			noteinput=noteinput.substring(1);
+		}
+		else if (noteinput.substring(0,1).equals("b"))
+		{
+			accidental=-1; 
+			noteinput=noteinput.substring(1);
+		}
+    }
 //-------------------------------------------------------------------//
     /**
      * WARNING!!!  DO NOT MODIFY THIS METHOD.
-     *
+     * 
      * Once you have calculated the MIDI note number and its duration, call this
      * method to play that note.
-     *
+     * 
      * @param noteNumber The MIDI note number, as described in the spec.
      * @param durationMs The number of milliseconds to play the note.  A larger number will play the note for a longer time.
      */
     public static void playNote(int noteNumber, int durationMs)
     {
-    // WARNING!!!  DO NOT MODIFY THIS METHOD.
+    	// WARNING!!!  DO NOT MODIFY THIS METHOD.
         MidiWrapper.playNote(noteNumber, durationMs);
     }
-   
-   
-   
-   
-/**
-* WARNING!!!  DO NOT MODIFY THIS METHOD.
-*
-* Call this method to change the instrument used to play notes.
-*
-* @param instrumentNumber The MIDI instrument number to begin using.  Must
-* be in the range between 0 and 127 inclusive.
-*/
-public static void setInstrument(int instrumentNumber)
-{
-// WARNING!!!  DO NOT MODIFY THIS METHOD.
-MidiWrapper.setInstrument(instrumentNumber);
-}
-  
+    
+    
+    
+    
+	/**
+	 * WARNING!!!  DO NOT MODIFY THIS METHOD.
+	 * 
+	 * Call this method to change the instrument used to play notes.
+	 * 
+	 * @param instrumentNumber The MIDI instrument number to begin using.  Must
+	 * be in the range between 0 and 127 inclusive.
+	 */
+	public static void setInstrument(int instrumentNumber)
+	{
+		// WARNING!!!  DO NOT MODIFY THIS METHOD.
+		MidiWrapper.setInstrument(instrumentNumber);
+	}
+    
 }
