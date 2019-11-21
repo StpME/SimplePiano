@@ -12,7 +12,7 @@ public class NotePlayer
     	while (!(input.equals("quit")))
     	{
     		Scanner con=new Scanner(System.in);
-        	System.out.println("Enter note list or list/set instrument or 'quit' to end");
+        	//System.out.println("Enter note list or list/set instrument or 'quit' to end");
         	input= con.nextLine();
         	if (!(input.equals("quit")))
         	{
