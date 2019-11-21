@@ -1,21 +1,18 @@
 package notePlayer;
-
 import core.MidiWrapper;
 import java.util.Scanner;
 public class NotePlayer
-
 {
     public static void main(String[] args)
     { 
-    	
     	String input="";
-    	while (!(input.equals("quit")))
-    	{
+    //	while (!(input.equals("quit")))
+    //	{
     		Scanner con=new Scanner(System.in);
-        	//System.out.println("Enter note list or list/set instrument or 'quit' to end");
+        	System.out.println("Enter note list or list/set instrument or 'quit' to end");
         	input= con.nextLine();
-        	if (!(input.equals("quit")))
-        	{
+      //  	if (!(input.equals("quit")))
+      //  	{
 		    	if (input.contains("_"))
 		    	{
 		    		NotePlayer(input);
@@ -29,8 +26,8 @@ public class NotePlayer
 		    	{
 		    		setI(input);
 		    	}
-        	}
-    	}
+        	//}
+    	//}
     }
     
     public static void setI(String input)
@@ -169,15 +166,11 @@ public class NotePlayer
 				{
 					duration=Integer.parseInt(noteinput.substring(noteinput.indexOf("_")+1));
 				}
-				
-				
 				//next note
 				noteinput=noteinput.substring(space+1);				
-				
 				NM(note,accidental,octave,duration,trans,tempo);			
-
-		    		accidental=0;
-		    		octave=0;	
+		    	accidental=0;
+		    	octave=0;	
 			} 
 		}
 
@@ -256,7 +249,7 @@ public class NotePlayer
     	else if (note.equals ("A")) {notenum=69;}
     	else if (note.equals ("B")) {notenum=71;}
     	
-    		if (accidental==1)
+    		if (accidental==1)	
     		{
     			notenum+=12*octave+1+trans;
     			playNote(notenum,duration);
@@ -306,9 +299,7 @@ public class NotePlayer
         MidiWrapper.playNote(noteNumber, durationMs);
     }
     
-    
-    
-    
+
 	/**
 	 * WARNING!!!  DO NOT MODIFY THIS METHOD.
 	 * 
@@ -322,5 +313,4 @@ public class NotePlayer
 		// WARNING!!!  DO NOT MODIFY THIS METHOD.
 		MidiWrapper.setInstrument(instrumentNumber);
 	}
-    
 }
