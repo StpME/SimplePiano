@@ -72,24 +72,19 @@ public class NotePlayer
 
     }
     
-    public static void TandT(String noteinput, int trans, double tempo, String combo)
+    public static String TandT(String noteinput, int trans, double tempo, String combo)
     {
     	trans=Integer.parseInt(noteinput.substring(0,1));
     	noteinput=noteinput.substring(noteinput.indexOf("_")+1);
     	tempo=Double.parseDouble(noteinput.substring(0,noteinput.indexOf(",")));
     	noteinput=noteinput.substring(noteinput.indexOf(",")+1);
-    	
-		System.out.println(noteinput);
-		System.out.println(trans);
-		System.out.println(tempo);
-		combo=noteinput+"$"+trans+"$"+tempo;
-    	
+		combo=trans+"$"+tempo;
+    	return combo;
     }
     
     public static void NotePlayer (String input)
     {
 
-    	System.out.println(input);
 		String note="";
 		String noteinput=input;
 		int accidental=0;
@@ -98,19 +93,21 @@ public class NotePlayer
 		int duration=0;
 		String d="";
 		int trans=0;
-		double tempo=0;
+		double tempo=1.0;
 		String combo="";
 		
 		//transpose and tempo
 		if (noteinput.contains(","))
 		{
-			TandT(noteinput, trans, tempo, combo);
+			combo=TandT(noteinput, trans, tempo, combo);
+			
+			trans=Integer.parseInt(combo.substring(0,combo.indexOf("$")));
+			combo=combo.substring(combo.indexOf("$")+1);
+			tempo=Double.parseDouble(combo.substring(0));
+			
+			
 			noteinput=noteinput.substring(noteinput.indexOf(",")+1);
 		}
-				
-		
-		System.out.println(combo);
-		
 		//for multiple notes
 		if (space !=-1)
 		{
@@ -177,7 +174,7 @@ public class NotePlayer
 				//next note
 				noteinput=noteinput.substring(space+1);				
 				
-				NM(note,accidental,octave,duration,trans);			
+				NM(note,accidental,octave,duration,trans,tempo);			
 
 		    		accidental=0;
 		    		octave=0;	
@@ -238,17 +235,19 @@ public class NotePlayer
 			}
 			duration=Integer.parseInt(noteinput.substring(noteinput.indexOf("_")+1));
 			
-			NM(note,accidental,octave,duration,trans);			
+			NM(note,accidental,octave,duration,trans,tempo);			
 	    	accidental=0;
 	    	octave=0;	
 		}	 
    }  //////End NotePlayer method		
-
     
     //notenum table and playnote
-    public static void NM(String note, int accidental, int octave, int duration,int trans)
+    public static void NM(String note, int accidental, int octave, int duration,int trans,double tempo)
     {
     	int notenum=0;
+		duration*=(tempo);
+		duration=(int)(duration);
+
     	if (note.equals ("C")) {notenum=60;}
     	else if (note.equals ("D")) {notenum=62;}
     	else if (note.equals ("E")) {notenum=64;}
