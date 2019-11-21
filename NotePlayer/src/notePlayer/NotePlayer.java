@@ -6,13 +6,13 @@ public class NotePlayer
     public static void main(String[] args)
     { 
     	String input="";
-    //	while (!(input.equals("quit")))
-    //	{
+    	while (!(input.equals("quit")))
+    	{
     		Scanner con=new Scanner(System.in);
         	System.out.println("Enter note list or list/set instrument or 'quit' to end");
         	input= con.nextLine();
-      //  	if (!(input.equals("quit")))
-      //  	{
+        	if (!(input.equals("quit")))
+        	{
 		    	if (input.contains("_"))
 		    	{
 		    		NotePlayer(input);
@@ -26,8 +26,8 @@ public class NotePlayer
 		    	{
 		    		setI(input);
 		    	}
-        	//}
-    	//}
+        	}
+    	}
     }
     
     public static void setI(String input)
@@ -71,7 +71,7 @@ public class NotePlayer
     
     public static String TandT(String noteinput, int trans, double tempo, String combo)
     {
-    	trans=Integer.parseInt(noteinput.substring(0,1));
+    	trans=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
     	noteinput=noteinput.substring(noteinput.indexOf("_")+1);
     	tempo=Double.parseDouble(noteinput.substring(0,noteinput.indexOf(",")));
     	noteinput=noteinput.substring(noteinput.indexOf(",")+1);
