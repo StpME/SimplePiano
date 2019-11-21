@@ -6,9 +6,10 @@ public class NotePlayer
     public static void main(String[] args)
     { 
     	String input="";
+		Scanner con=new Scanner(System.in);
+		
     	while (!(input.equals("quit")))
     	{
-    		Scanner con=new Scanner(System.in);
         	System.out.println("Enter note list or list/set instrument or 'quit' to end");
         	input= con.nextLine();
         	if (!(input.equals("quit")))
