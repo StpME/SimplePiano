@@ -40,7 +40,7 @@ public class NotePlayer
     
     public static void listI()
     {
-    	System.out.println("0: Piano 1        1: Piano 2        2: Piano 3        3: Honky-tonk     4: E.Piano");
+    	System.out.println("0: Piano 1        1: Piano 2        2: Piano 3        3: Honky-tonk     4: E.Piano 1");
     	System.out.println("5: E.Piano 2      6: Harpsichord    7: Clav.          8: Celesta        9: Glockenspiel");
     	System.out.println("10: Music Box     11: Vibraphone    12: Marimba       13: Xylophone     14: Tubular-bell");
     	System.out.println("15: Santur        16: Organ 1       17: Organ 2       18: Organ 3       19: Church Org.1");
