@@ -10,23 +10,34 @@ public class NotePlayer
 		
     	while (!(input.equals("quit")))
     	{
-        	System.out.println("Enter note list or list/set instrument or 'quit' to end");
-        	input= con.nextLine();
+        	System.out.println("\nOptions: \n- (input notes to play)\n- song list\n- list instrument\n- set instrument\n- quit");
+        	input = con.nextLine();
         	if (!(input.equals("quit")))
         	{
+        		
+        		
 		    	if (input.contains("_"))
 		    	{
-		    		NotePlayer(input);
+		    		NotePlay(input);
 		    	}
 	
-		    	else if(input.equals("list instruments"))
+		    	else if(input.equals("list instruments")|| input.equals("list instrument"))
 		    	{
 		    		listI();
 		    	}
-		    	else
+		    	else if(input.equals("set instrument"))
 		    	{
 		    		setI(input);
 		    	}
+		    	else if(input.equals("song list"))
+		    	{
+		    		//System.out.println("");
+		    	}
+		    	else
+		    	{
+		    		
+		    	}
+
         	}
     	}
     }
@@ -80,7 +91,7 @@ public class NotePlayer
     	return combo;
     }
     
-    public static void NotePlayer (String input)
+    public static void NotePlay (String input)
     {
 
 		String note="";
