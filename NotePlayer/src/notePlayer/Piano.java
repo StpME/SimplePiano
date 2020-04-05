@@ -1,16 +1,34 @@
 package notePlayer;
+
+
+
+
+//imports
+
 import core.MidiWrapper;
 import java.util.Scanner;
-public class NotePlayer
+import java.awt.Color;
+import java.util.ArrayList;
+
+
+public class Piano
 {
+	/* 				***Basic Purpose***
+	*Create a piano keyboard, pressing the keys will play a note.
+	*Other functions: accidentals, octaves to implement
+	*/
     public static void main(String[] args)
     { 
-    	String input="";
+    	CustomAppearance ca = new CustomAppearance(2, 6);
+    	ca.setCellColor(Color.white);
+    	ca.setBorderColor(Color.black);
+    	notePlayer.API.initialize(ca); 
+    	String input=""; 
 		Scanner con=new Scanner(System.in);
 		
     	while (!(input.equals("quit")))
     	{
-        	System.out.println("\nOptions: \n- (input notes to play)\n- song list\n- list instrument\n- set instrument\n- quit");
+        	System.out.println("\nOptions: \n- (input notes to play)\n- song list\n- list instrument\n- set instrument (Instrument Name)\n- quit");
         	input = con.nextLine();
         	if (!(input.equals("quit")))
         	{
@@ -19,25 +37,25 @@ public class NotePlayer
 		    	if (input.contains("_"))
 		    	{
 		    		NotePlay(input);
+		    		
 		    	}
 	
 		    	else if(input.equals("list instruments")|| input.equals("list instrument"))
 		    	{
 		    		listI();
 		    	}
-		    	else if(input.equals("set instrument"))
+		    	else if(input.contains("set instrument"))
 		    	{
 		    		setI(input);
 		    	}
+		    	//***To be added
 		    	else if(input.equals("song list"))
 		    	{
 		    		//System.out.println("");
 		    	}
-		    	else
-		    	{
-		    		
-		    	}
-
+		    	else {}
+		    	
+		    	
         	}
     	}
     }
@@ -117,6 +135,7 @@ public class NotePlayer
 			
 			noteinput=noteinput.substring(noteinput.indexOf(",")+1);
 		}
+		
 		//for multiple notes
 		if (space !=-1)
 		{
@@ -244,7 +263,7 @@ public class NotePlayer
 	    	accidental=0;
 	    	octave=0;	
 		}	 
-   }  //////End NotePlayer method		
+   }  //***End NotePlayer method		
     
     //notenum table and playnote
     public static void NM(String note, int accidental, int octave, int duration,int trans,double tempo)
@@ -296,6 +315,7 @@ public class NotePlayer
     
 
 //-------------------------------------------------------------------//
+//Project borrows core package from APCS to construct API and play notes
     /**
      * WARNING!!!  DO NOT MODIFY THIS METHOD.
      * 
