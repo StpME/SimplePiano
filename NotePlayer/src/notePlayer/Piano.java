@@ -53,7 +53,7 @@ public class Piano
 		    	{
 		    		//System.out.println("");
 		    	}
-		    	else {}
+		    	else {System.out.println("Invalid input");}
 		    	
 		    	
         	}
@@ -99,14 +99,14 @@ public class Piano
 
     }
     
-    public static String TandT(String noteinput, int trans, double tempo, String combo)
+    public static String transposeTempo(String noteinput, int trans, double tempo, String combined)
     {
     	trans=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
     	noteinput=noteinput.substring(noteinput.indexOf("_")+1);
     	tempo=Double.parseDouble(noteinput.substring(0,noteinput.indexOf(",")));
     	noteinput=noteinput.substring(noteinput.indexOf(",")+1);
-		combo=trans+"$"+tempo;
-    	return combo;
+		combined=trans+"$"+tempo;
+    	return combined;
     }
     
     public static void NotePlay (String input)
@@ -118,7 +118,7 @@ public class Piano
 		int octave=0;
 		int space=noteinput.indexOf(" ");
 		int duration=0;
-		String d="";
+		
 		int trans=0;
 		double tempo=1.0;
 		String combo="";
@@ -126,7 +126,7 @@ public class Piano
 		//transpose and tempo
 		if (noteinput.contains(","))
 		{
-			combo=TandT(noteinput, trans, tempo, combo);
+			combo=transposeTempo(noteinput, trans, tempo, combo);
 			
 			trans=Integer.parseInt(combo.substring(0,combo.indexOf("$")));
 			combo=combo.substring(combo.indexOf("$")+1);
