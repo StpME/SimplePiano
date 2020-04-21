@@ -1,7 +1,7 @@
 package notePlayer;
 
 //imports
-
+//Project borrows packages from APCS to construct API and play notes
 import core.MidiWrapper;
 import java.util.Scanner;
 import java.awt.Color;
@@ -10,14 +10,21 @@ import java.util.ArrayList;
 
 public class Piano
 {
+	
 	/* 				***Basic Purpose***
 	*Create a piano keyboard, pressing the keys will play a note.
 	*Other functions: accidentals, octaves to implement
 	*/
+	
+	private static int octave;
+	private String end;
+	
     public static void main(String[] args)
     { 
+    	
+    	System.out.println("NUMBERS - play notes(1-7) || Y,U,I,O,P - Accidentals || LEFT/RIGHT arrows (-/+ octave) ");
     	int columns = 7;
-    	CustomAppearance ca = new CustomAppearance(1, columns);
+    	CustomAppearance ca = new CustomAppearance(2, columns);
     	ca.setCellColor(Color.white);
     	ca.setBorderColor(Color.black);
     	notePlayer.API.initialize(ca); 
@@ -26,7 +33,7 @@ public class Piano
     	String input=""; 
     	
 		//Scanner con=new Scanner(System.in);
-		while(!(input.equals("x")|| input.contentEquals("X")))
+		while(!(input.equals("x")))
 		{
 			Scanner con=new Scanner(System.in);
 			checkPressedKey();	
@@ -100,7 +107,7 @@ public class Piano
 
     }
     
-    public static String transposeTempo(String noteinput, int trans, double tempo, String combined)
+   /* public static String transposeTempo(String noteinput, int trans, double tempo, String combined)
     {
     	trans=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
     	noteinput=noteinput.substring(noteinput.indexOf("_")+1);
@@ -271,7 +278,7 @@ public class Piano
 		}	 
      //***End NotePlayer method		
       
-    }
+    }*/
     
     
     
@@ -282,7 +289,7 @@ public class Piano
     
     
     //notenum table and playnote
-    public static void NM(String note, int accidental, int octave, int duration,int trans,double tempo)
+   /* public static void NM(String note, int accidental, int octave, int duration,int trans,double tempo)
     {
     	int notenum=0;
 		duration*=(tempo);
@@ -326,17 +333,26 @@ public class Piano
 			accidental=-1; 
 			noteinput=noteinput.substring(1);
 		}
-    }
+    }*/
     
-    //Set notes
+    //Print notes to keyboard
     public static void keyboard(int columns)
     {
     	String[] notes = {"C", "D", "E", "F", "G", "A", "B"};
+    	String[] notesAccidental = {"C#", "D", "Eb", "F#", "G", "A#", "Bb"};
+    	//Set regular notes
     	for(int i = 0; i<columns;i++)
     	{
-    		notePlayer.API.drawText(0, i, notes[i], Color.WHITE);
-    		System.out.println(notes[i]);
+    		notePlayer.API.drawText(1, i, notes[i], Color.BLACK);
+    		//System.out.println(notes[i]+ i);
     	}
+    	//Set Accidentals
+    	notePlayer.API.drawText(0, 0, "C#", Color.BLACK);
+    	notePlayer.API.drawText(0, 2, "Eb", Color.BLACK);
+    	notePlayer.API.drawText(0, 3, "F#", Color.BLACK);
+    	notePlayer.API.drawText(0, 5, "A#", Color.BLACK);
+    	notePlayer.API.drawText(0, 6, "Bb", Color.BLACK);
+    	
     }
     
     
@@ -345,54 +361,49 @@ public class Piano
     {
 	  
 	  String key = notePlayer.API.getPressedKey();
-	 
-	  if (key != null)
+	  if(key!=null && key.equals("v"))
 	  {
-		  System.out.println(key);
-		  noteplayer(key);
-		  //return;
+		  System.out.println("awd");
+		  octave = 1;
 	  }
+	  else if (key!=null)
+	  {
+		  
+		  noteplayer(key);
+	  }
+	  
+	  
 	  return;
+	  
     }
     
     public static void noteplayer(String key)
     {
-    	  if(key.equalsIgnoreCase("C")||key.equalsIgnoreCase("1"))
-		  {
-			  notePlayer.API.playNote(60 ,200);
-		  }
-		  else if(key.equalsIgnoreCase("D")|| key.equalsIgnoreCase("2"))
-		  {
-			  notePlayer.API.playNote(62 ,200);
-		  }
-		  else if(key.equalsIgnoreCase("E")||key.equalsIgnoreCase("3"))
-		  {
-			  notePlayer.API.playNote(64 ,200);
-		  }
-		  else if(key.equalsIgnoreCase("F")||key.equalsIgnoreCase("4"))
-		  {
-			  notePlayer.API.playNote(65 ,200);
-		  }
-		  else if(key.equalsIgnoreCase("G")||key.equalsIgnoreCase("5"))
-		  {
-			  notePlayer.API.playNote(67 ,200);
-		  }
-		  else if(key.equalsIgnoreCase("A")||key.equalsIgnoreCase("6"))
-		  {
-			  notePlayer.API.playNote(69 ,200);
-		  }
-		  else if(key.equalsIgnoreCase("B")||key.equalsIgnoreCase("7"))
-		  {
-			  notePlayer.API.playNote(71 ,200);
-		  }
-		  else {}
+    	  int notenum = 0;
+    	  //Inside staff
+    	  if(key.equals("1")) {notenum=60; System.out.print("C ");}
+    	  else if(key.equals("2")) {notenum=62; System.out.print("D ");}
+		  else if(key.equals("3")) {notenum=64; System.out.print("E ");}
+		  else if(key.equals("4")) {notenum=65; System.out.print("F ");}
+		  else if(key.equals("5")) {notenum=67; System.out.print("G ");}
+		  else if(key.equals("6")) {notenum=69; System.out.print("A ");}
+		  else if(key.equals("7")) {notenum=71; System.out.print("B ");}
+		  
+    	  //Octave check
+    	  if (octave==1) {notenum+=12;}
+    	  if (octave==-1) {notenum-=12;}
+    	  if(notenum>=40)
+    	  {
+    		  playNote(notenum,200);
+    	  }
+    	  notenum=0;
+    	  System.out.println(octave);
     }
     
 
 //-------------------------------------------------------------------//
-//Project borrows packages from APCS to construct API and play notes
+
     /**
-     * WARNING!!!  DO NOT MODIFY THIS METHOD.
      * 
      * Once you have calculated the MIDI note number and its duration, call this
      * method to play that note.
@@ -408,7 +419,6 @@ public class Piano
     
 
 	/**
-	 * WARNING!!!  DO NOT MODIFY THIS METHOD.
 	 * 
 	 * Call this method to change the instrument used to play notes.
 	 * 
