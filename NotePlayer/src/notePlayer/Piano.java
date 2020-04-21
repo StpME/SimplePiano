@@ -1,8 +1,5 @@
 package notePlayer;
 
-
-
-
 //imports
 
 import core.MidiWrapper;
@@ -19,25 +16,31 @@ public class Piano
 	*/
     public static void main(String[] args)
     { 
-    	CustomAppearance ca = new CustomAppearance(2, 6);
+    	int columns = 7;
+    	CustomAppearance ca = new CustomAppearance(1, columns);
     	ca.setCellColor(Color.white);
     	ca.setBorderColor(Color.black);
     	notePlayer.API.initialize(ca); 
+    	keyboard(columns);
+    	
     	String input=""; 
-		Scanner con=new Scanner(System.in);
-		
+    	
+		//Scanner con=new Scanner(System.in);
+		while(!(input.equals("x")|| input.contentEquals("X")))
+		{
+			Scanner con=new Scanner(System.in);
+			checkPressedKey();	
+		}
+		/*
     	while (!(input.equals("quit")))
     	{
         	System.out.println("\nOptions: \n- (input notes to play)\n- song list\n- list instrument\n- set instrument (Instrument Name)\n- quit");
         	input = con.nextLine();
         	if (!(input.equals("quit")))
         	{
-        		
-        		
-		    	if (input.contains("_"))
+		    	if (input.contains("_"))	
 		    	{
 		    		NotePlay(input);
-		    		
 		    	}
 	
 		    	else if(input.equals("list instruments")|| input.equals("list instrument"))
@@ -54,10 +57,8 @@ public class Piano
 		    		//System.out.println("");
 		    	}
 		    	else {System.out.println("Invalid input");}
-		    	
-		    	
         	}
-    	}
+    	}*/
     }
     
     public static void setI(String input)
@@ -143,6 +144,9 @@ public class Piano
 			{		
 				note=noteinput.substring(0,1);
 				noteinput=noteinput.substring(1);
+				
+				
+				
 				//accidentals
 				if (noteinput.substring(0,1).equals("#"))
 				{
@@ -155,6 +159,8 @@ public class Piano
 					noteinput=noteinput.substring(1);
 					
 				}
+				
+				
 				//octaves
 				if (accidental == -1 || accidental == 1)
 				{
@@ -263,7 +269,17 @@ public class Piano
 	    	accidental=0;
 	    	octave=0;	
 		}	 
-   }  //***End NotePlayer method		
+     //***End NotePlayer method		
+      
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
     //notenum table and playnote
     public static void NM(String note, int accidental, int octave, int duration,int trans,double tempo)
@@ -287,11 +303,9 @@ public class Piano
     		}
     		else if (accidental==-1)
     		{
-    			
-    			
     			notenum+=12*octave-1+trans;
     			playNote(notenum,duration);
-    		}
+    		}			
     		else 
     		{
     			notenum+=12*octave+trans;
@@ -299,6 +313,7 @@ public class Piano
     		}
     		
     }
+    //Accidentals
     public static void ACC(int accidental, String noteinput)
     {
     	if (noteinput.substring(0,1).equals("#"))
@@ -313,9 +328,69 @@ public class Piano
 		}
     }
     
+    //Set notes
+    public static void keyboard(int columns)
+    {
+    	String[] notes = {"C", "D", "E", "F", "G", "A", "B"};
+    	for(int i = 0; i<columns;i++)
+    	{
+    		notePlayer.API.drawText(0, i, notes[i], Color.WHITE);
+    		System.out.println(notes[i]);
+    	}
+    }
+    
+    
+    //check input for piano note
+    public static void checkPressedKey()
+    {
+	  
+	  String key = notePlayer.API.getPressedKey();
+	 
+	  if (key != null)
+	  {
+		  System.out.println(key);
+		  noteplayer(key);
+		  //return;
+	  }
+	  return;
+    }
+    
+    public static void noteplayer(String key)
+    {
+    	  if(key.equalsIgnoreCase("C")||key.equalsIgnoreCase("1"))
+		  {
+			  notePlayer.API.playNote(60 ,200);
+		  }
+		  else if(key.equalsIgnoreCase("D")|| key.equalsIgnoreCase("2"))
+		  {
+			  notePlayer.API.playNote(62 ,200);
+		  }
+		  else if(key.equalsIgnoreCase("E")||key.equalsIgnoreCase("3"))
+		  {
+			  notePlayer.API.playNote(64 ,200);
+		  }
+		  else if(key.equalsIgnoreCase("F")||key.equalsIgnoreCase("4"))
+		  {
+			  notePlayer.API.playNote(65 ,200);
+		  }
+		  else if(key.equalsIgnoreCase("G")||key.equalsIgnoreCase("5"))
+		  {
+			  notePlayer.API.playNote(67 ,200);
+		  }
+		  else if(key.equalsIgnoreCase("A")||key.equalsIgnoreCase("6"))
+		  {
+			  notePlayer.API.playNote(69 ,200);
+		  }
+		  else if(key.equalsIgnoreCase("B")||key.equalsIgnoreCase("7"))
+		  {
+			  notePlayer.API.playNote(71 ,200);
+		  }
+		  else {}
+    }
+    
 
 //-------------------------------------------------------------------//
-//Project borrows core package from APCS to construct API and play notes
+//Project borrows packages from APCS to construct API and play notes
     /**
      * WARNING!!!  DO NOT MODIFY THIS METHOD.
      * 
