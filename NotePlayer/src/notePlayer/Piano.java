@@ -17,7 +17,7 @@ public class Piano
 	*/
 	
 	private static int octave;
-	private String end;
+	private static String end;
 	
     public static void main(String[] args)
     { 
@@ -33,7 +33,7 @@ public class Piano
     	String input=""; 
     	
 		//Scanner con=new Scanner(System.in);
-		while(!(input.equals("x")))
+		while(!(end.equals("x")))
 		{
 			Scanner con=new Scanner(System.in);
 			checkPressedKey();	
