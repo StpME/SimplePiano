@@ -18,12 +18,15 @@ public class Piano
 	
 	private static int octave;
 	private static String end;
+	private static int columns;
+	private static int notenum;
 	
     public static void main(String[] args)
     { 
     	
-    	System.out.println("NUMBERS - play notes(1-7) || Y,U,I,O,P - Accidentals || LEFT/RIGHT arrows (-/+ octave) ");
-    	int columns = 7;
+    	System.out.println("NUMBERS - play notes(1-8) || Y,U,I,O,P - Accidentals || LEFT/RIGHT arrows (-/+ octave) ");
+    	columns=8;
+    	notenum=0;
     	CustomAppearance ca = new CustomAppearance(2, columns);
     	ca.setCellColor(Color.white);
     	ca.setBorderColor(Color.black);
@@ -32,40 +35,13 @@ public class Piano
     	
     	String input=""; 
     	
-		//Scanner con=new Scanner(System.in);
-		while(!(end.equals("x")))
+		
+		while(!(input.equals("x")))
 		{
 			Scanner con=new Scanner(System.in);
 			checkPressedKey();	
 		}
-		/*
-    	while (!(input.equals("quit")))
-    	{
-        	System.out.println("\nOptions: \n- (input notes to play)\n- song list\n- list instrument\n- set instrument (Instrument Name)\n- quit");
-        	input = con.nextLine();
-        	if (!(input.equals("quit")))
-        	{
-		    	if (input.contains("_"))	
-		    	{
-		    		NotePlay(input);
-		    	}
-	
-		    	else if(input.equals("list instruments")|| input.equals("list instrument"))
-		    	{
-		    		listI();
-		    	}
-		    	else if(input.contains("set instrument"))
-		    	{
-		    		setI(input);
-		    	}
-		    	//***To be added
-		    	else if(input.equals("song list"))
-		    	{
-		    		//System.out.println("");
-		    	}
-		    	else {System.out.println("Invalid input");}
-        	}
-    	}*/
+		
     }
     
     public static void setI(String input)
@@ -107,178 +83,7 @@ public class Piano
 
     }
     
-   /* public static String transposeTempo(String noteinput, int trans, double tempo, String combined)
-    {
-    	trans=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
-    	noteinput=noteinput.substring(noteinput.indexOf("_")+1);
-    	tempo=Double.parseDouble(noteinput.substring(0,noteinput.indexOf(",")));
-    	noteinput=noteinput.substring(noteinput.indexOf(",")+1);
-		combined=trans+"$"+tempo;
-    	return combined;
-    }
-    
-    public static void NotePlay (String input)
-    {
 
-		String note="";
-		String noteinput=input;
-		int accidental=0;
-		int octave=0;
-		int space=noteinput.indexOf(" ");
-		int duration=0;
-		
-		int trans=0;
-		double tempo=1.0;
-		String combo="";
-		
-		//transpose and tempo
-		if (noteinput.contains(","))
-		{
-			combo=transposeTempo(noteinput, trans, tempo, combo);
-			
-			trans=Integer.parseInt(combo.substring(0,combo.indexOf("$")));
-			combo=combo.substring(combo.indexOf("$")+1);
-			tempo=Double.parseDouble(combo.substring(0));
-			
-			
-			noteinput=noteinput.substring(noteinput.indexOf(",")+1);
-		}
-		
-		//for multiple notes
-		if (space !=-1)
-		{
-			while(space!=-1)
-			{		
-				note=noteinput.substring(0,1);
-				noteinput=noteinput.substring(1);
-				
-				
-				
-				//accidentals
-				if (noteinput.substring(0,1).equals("#"))
-				{
-					accidental=1; 
-					noteinput=noteinput.substring(1);
-				}
-				else if (noteinput.substring(0,1).equals("b"))
-				{
-					accidental=-1; 
-					noteinput=noteinput.substring(1);
-					
-				}
-				
-				
-				//octaves
-				if (accidental == -1 || accidental == 1)
-				{
-					if (noteinput.indexOf("_")!=0)
-					{
-						if (noteinput.indexOf("-")==0)
-						{
-							octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
-							noteinput=noteinput.substring(2);
-						}
-						else 
-						{
-							octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
-							noteinput=noteinput.substring(1);
-						}
-					}
-				}
-				else 
-				{
-					if (noteinput.indexOf("_")!=0)
-					{
-						if (noteinput.indexOf("-")==0)
-						{
-							octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
-							noteinput=noteinput.substring(1);
-						}
-						else 
-						{
-							octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
-							noteinput=noteinput.substring(0);
-						}
-					}
-				}		
-				space=noteinput.indexOf(" ");
-				if (space!=-1)
-				{
-					duration=Integer.parseInt(noteinput.substring(noteinput.indexOf("_")+1,space));
-				}
-				else 
-				{
-					duration=Integer.parseInt(noteinput.substring(noteinput.indexOf("_")+1));
-				}
-				//next note
-				noteinput=noteinput.substring(space+1);				
-				NM(note,accidental,octave,duration,trans,tempo);			
-		    	accidental=0;
-		    	octave=0;	
-			} 
-		}
-
-		//////////////////////////for single notes and/or last note//////////////////////////
-		else if (space == -1)
-		{
-			
-			note=noteinput.substring(0,1);
-			noteinput=noteinput.substring(1);
-			//accidentals
-			if (noteinput.substring(0,1).equals("#"))
-			{
-				accidental=1; 
-				noteinput=noteinput.substring(1);	
-			}
-			else if (noteinput.substring(0,1).equals("b"))
-			{
-				accidental=-1; 
-				noteinput=noteinput.substring(1);
-				
-			}			
-			
-			//octaves
-			if (accidental == -1 || accidental == 1)
-			{
-				if (noteinput.indexOf("_")!=0)
-				{
-					if (noteinput.indexOf("-")==0)
-					{
-						octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
-						noteinput=noteinput.substring(2);
-					}
-					else 
-					{
-						octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
-						noteinput=noteinput.substring(1);
-					}
-				}
-			}
-			else 
-			{
-				if (noteinput.indexOf("_")!=0)
-				{
-					if (noteinput.indexOf("-")==0)
-					{
-						octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
-						noteinput=noteinput.substring(1);
-					}
-					else 
-					{
-						octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
-						noteinput=noteinput.substring(0);
-					}
-				}
-			}
-			duration=Integer.parseInt(noteinput.substring(noteinput.indexOf("_")+1));
-			
-			NM(note,accidental,octave,duration,trans,tempo);			
-	    	accidental=0;
-	    	octave=0;	
-		}	 
-     //***End NotePlayer method		
-      
-    }*/
     
     
     
@@ -287,59 +92,14 @@ public class Piano
     
     
     
+  
     
-    //notenum table and playnote
-   /* public static void NM(String note, int accidental, int octave, int duration,int trans,double tempo)
-    {
-    	int notenum=0;
-		duration*=(tempo);
-		duration=(int)(duration);
-
-    	if (note.equals ("C")) {notenum=60;}
-    	else if (note.equals ("D")) {notenum=62;}
-    	else if (note.equals ("E")) {notenum=64;}
-    	else if (note.equals ("F")) {notenum=65;}
-    	else if (note.equals ("G")) {notenum=67;}
-    	else if (note.equals ("A")) {notenum=69;}
-    	else if (note.equals ("B")) {notenum=71;}
-    	
-    		if (accidental==1)	
-    		{
-    			notenum+=12*octave+1+trans;
-    			playNote(notenum,duration);
-    		}
-    		else if (accidental==-1)
-    		{
-    			notenum+=12*octave-1+trans;
-    			playNote(notenum,duration);
-    		}			
-    		else 
-    		{
-    			notenum+=12*octave+trans;
-    			playNote(notenum,duration);
-    		}
-    		
-    }
-    //Accidentals
-    public static void ACC(int accidental, String noteinput)
-    {
-    	if (noteinput.substring(0,1).equals("#"))
-		{
-			accidental=1; 
-			noteinput=noteinput.substring(1);
-		}
-		else if (noteinput.substring(0,1).equals("b"))
-		{
-			accidental=-1; 
-			noteinput=noteinput.substring(1);
-		}
-    }*/
     
     //Print notes to keyboard
     public static void keyboard(int columns)
     {
-    	String[] notes = {"C", "D", "E", "F", "G", "A", "B"};
-    	String[] notesAccidental = {"C#", "D", "Eb", "F#", "G", "A#", "Bb"};
+    	String[] notes = {"C", "D", "E", "F", "G", "A", "B", "C"};
+    	String[] notesAccidental = {"C#", "D", "Eb", "F#", "G#", "A#", "Bb"};
     	//Set regular notes
     	for(int i = 0; i<columns;i++)
     	{
@@ -361,14 +121,10 @@ public class Piano
     {
 	  
 	  String key = notePlayer.API.getPressedKey();
-	  if(key!=null && key.equals("v"))
+	  
+	  if (key!=null)
 	  {
-		  System.out.println("awd");
-		  octave = 1;
-	  }
-	  else if (key!=null)
-	  {
-		  
+		  notenum=0;
 		  noteplayer(key);
 	  }
 	  
@@ -379,24 +135,28 @@ public class Piano
     
     public static void noteplayer(String key)
     {
-    	  int notenum = 0;
+    	  
     	  //Inside staff
-    	  if(key.equals("1")) {notenum=60; System.out.print("C ");}
-    	  else if(key.equals("2")) {notenum=62; System.out.print("D ");}
-		  else if(key.equals("3")) {notenum=64; System.out.print("E ");}
-		  else if(key.equals("4")) {notenum=65; System.out.print("F ");}
-		  else if(key.equals("5")) {notenum=67; System.out.print("G ");}
-		  else if(key.equals("6")) {notenum=69; System.out.print("A ");}
-		  else if(key.equals("7")) {notenum=71; System.out.print("B ");}
-		  
-    	  //Octave check
-    	  if (octave==1) {notenum+=12;}
-    	  if (octave==-1) {notenum-=12;}
+    	  if(key.equals("1")) {notenum+=60; System.out.print("C "); notePlayer.API.paintSolidColor(1, 0, Color.YELLOW);}
+    	  else if(key.equals("2")) {notenum+=62; System.out.print("D "); notePlayer.API.paintSolidColor(1, 1, Color.YELLOW);}
+		  else if(key.equals("3")) {notenum+=64; System.out.print("E "); notePlayer.API.paintSolidColor(1, 2, Color.YELLOW);}
+		  else if(key.equals("4")) {notenum+=65; System.out.print("F "); notePlayer.API.paintSolidColor(1, 3, Color.YELLOW);}
+		  else if(key.equals("5")) {notenum+=67; System.out.print("G "); notePlayer.API.paintSolidColor(1, 4, Color.YELLOW);}
+		  else if(key.equals("6")) {notenum+=69; System.out.print("A "); notePlayer.API.paintSolidColor(1, 5, Color.YELLOW);}
+		  else if(key.equals("7")) {notenum+=71; System.out.print("B "); notePlayer.API.paintSolidColor(1, 6, Color.YELLOW);}
+		  else if(key.equals("8")) {notenum+=72; System.out.print("C^ "); notePlayer.API.paintSolidColor(1, 7, Color.YELLOW);}
+    	  //Accidentals
+		  else if(key.equals("Y")) {notenum+=61; System.out.print("C# "); notePlayer.API.paintSolidColor(0, 0, Color.YELLOW);}
+		  else if(key.equals("U")) {notenum+=63; System.out.print("Eb "); notePlayer.API.paintSolidColor(0, 2, Color.YELLOW);}
+		  else if(key.equals("I")) {notenum+=66; System.out.print("F# "); notePlayer.API.paintSolidColor(0, 3, Color.YELLOW);}
+		  else if(key.equals("O")) {notenum+=68; System.out.print("G# "); notePlayer.API.paintSolidColor(0, 5, Color.YELLOW);}
+		  else if(key.equals("P")) {notenum+=70; System.out.print("Bb "); notePlayer.API.paintSolidColor(0, 6, Color.YELLOW);}
+
     	  if(notenum>=40)
     	  {
     		  playNote(notenum,200);
     	  }
-    	  notenum=0;
+    	  keyboard(columns);
     	  System.out.println(octave);
     }
     
