@@ -158,7 +158,7 @@ public class Piano
     		  playNote(notenum,200);
     	  }
     	  keyboard(columns);
-    	  System.out.println(octave);
+    	  //System.out.println(octave);
     }
     
 
