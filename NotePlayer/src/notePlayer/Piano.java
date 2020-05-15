@@ -125,7 +125,12 @@ public class Piano
 	  
 	  if (key!=null)
 	  {
+		  
 		  notenum=0;
+		  if(key.equals("v"))
+		  {
+			  notenum+=12;
+		  }
 		  noteplayer(key);
 	  }
 	  
