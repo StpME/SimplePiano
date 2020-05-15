@@ -1,7 +1,7 @@
 package notePlayer;
 import core.MidiWrapper;
 import java.util.Scanner;
-public class Piano
+public class NotePlayer
 {
     public static void main(String[] args)
     { 
@@ -38,7 +38,7 @@ public class Piano
 		int instrumentNumber=Integer.parseInt(set);
 		setInstrument(instrumentNumber);
     }
- 
+    
     public static void listI()
     {
     	System.out.println("0: Piano 1        1: Piano 2        2: Piano 3        3: Honky-tonk     4: E.Piano 1");
