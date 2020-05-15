@@ -1,58 +1,44 @@
 package notePlayer;
-
-//imports
-//Project borrows packages from APCS to construct API and play notes
 import core.MidiWrapper;
 import java.util.Scanner;
-import java.awt.Color;
-import java.util.ArrayList;
-
-
 public class Piano
 {
-	
-	/* 				***Basic Purpose***
-	*Create a piano keyboard, pressing the keys will play a note.
-	*Other functions: accidentals, octaves to implement
-	*/
-	
-	private static int octave;
-	private static String end;
-	private static int columns;
-	private static int notenum;
-	
     public static void main(String[] args)
     { 
-    	
-    	System.out.println("NUMBERS - play notes(1-8) || Y,U,I,O,P - Accidentals || ///fix keys/// (-/+ octave) ");
-    	System.out.println("Chromatic scale: 1 Y 2 U 3 4 I 5 O 6 P 7 8");
-    	columns=8;
-    	notenum=0;
-    	CustomAppearance ca = new CustomAppearance(2, columns);
-    	ca.setCellColor(Color.white);
-    	ca.setBorderColor(Color.black);
-    	notePlayer.API.initialize(ca); 
-    	keyboard(columns);
-    	
-    	String input=""; 
-    	
+    	String input="";
+		Scanner con=new Scanner(System.in);
 		
-		while(!(input.equals("x")))
-		{
-			Scanner con=new Scanner(System.in);
-			checkPressedKey();	
-		}
-		
+    	while (!(input.equals("quit")))
+    	{
+        	System.out.println("Enter note list or list/set instrument or 'quit' to end");
+        	input= con.nextLine();
+        	if (!(input.equals("quit")))
+        	{
+		    	if (input.contains("_"))
+		    	{
+		    		NotePlayer(input);
+		    	}
+	
+		    	else if(input.equals("list instruments"))
+		    	{
+		    		listI();
+		    	}
+		    	else
+		    	{
+		    		setI(input);
+		    	}
+        	}
+    	}
     }
     
-   /* public static void setI(String input)
+    public static void setI(String input)
     {
     	String set=input;
 		set=set.substring(15);
 		int instrumentNumber=Integer.parseInt(set);
 		setInstrument(instrumentNumber);
     }
-    
+ 
     public static void listI()
     {
     	System.out.println("0: Piano 1        1: Piano 2        2: Piano 3        3: Honky-tonk     4: E.Piano 1");
@@ -82,94 +68,225 @@ public class Piano
     	System.out.println("120: Gt.FretNoise 121: Breath Noise 122: Seashore     123: Bird         124: Telephone 1");
     	System.out.println("125: Helicopter   126: Applause     127: Gun Shot");
 
-    }*/
+    }
     
-
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    //Print notes to keyboard
-    public static void keyboard(int columns)
+    public static String TandT(String noteinput, int trans, double tempo, String combo)
     {
-    	String[] notes = {"C", "D", "E", "F", "G", "A", "B", "C"};
-    	//String[] notesAccidental = {"C#", "D", "Eb", "F#", "G#", "Bb"};
-    	//Set regular notes
-    	for(int i = 0; i<columns;i++)
-    	{
-    		notePlayer.API.drawText(1, i, notes[i], Color.BLACK);
-    		//System.out.println(notes[i]+ i);
-    	}
-    	//Set Accidentals
-    	notePlayer.API.drawText(0, 0, "C#", Color.BLACK);
-    	notePlayer.API.drawText(0, 2, "Eb", Color.BLACK);
-    	notePlayer.API.drawText(0, 3, "F#", Color.BLACK);
-    	notePlayer.API.drawText(0, 4, "G#", Color.BLACK);
-    	notePlayer.API.drawText(0, 6, "Bb", Color.BLACK);
+    	trans=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+    	noteinput=noteinput.substring(noteinput.indexOf("_")+1);
+    	tempo=Double.parseDouble(noteinput.substring(0,noteinput.indexOf(",")));
+    	noteinput=noteinput.substring(noteinput.indexOf(",")+1);
+		combo=trans+"$"+tempo;
+    	return combo;
+    }
+    
+    public static void NotePlayer (String input)
+    {
+
+		String note="";
+		String noteinput=input;
+		int accidental=0;
+		int octave=0;
+		int space=noteinput.indexOf(" ");
+		int duration=0;
+		String d="";
+		int trans=0;
+		double tempo=1.0;
+		String combo="";
+		
+		//transpose and tempo
+		if (noteinput.contains(","))
+		{
+			combo=TandT(noteinput, trans, tempo, combo);
+			
+			trans=Integer.parseInt(combo.substring(0,combo.indexOf("$")));
+			combo=combo.substring(combo.indexOf("$")+1);
+			tempo=Double.parseDouble(combo.substring(0));
+			
+			
+			noteinput=noteinput.substring(noteinput.indexOf(",")+1);
+		}
+		//for multiple notes
+		if (space !=-1)
+		{
+			while(space!=-1)
+			{		
+				note=noteinput.substring(0,1);
+				noteinput=noteinput.substring(1);
+				//accidentals
+				if (noteinput.substring(0,1).equals("#"))
+				{
+					accidental=1; 
+					noteinput=noteinput.substring(1);
+				}
+				else if (noteinput.substring(0,1).equals("b"))
+				{
+					accidental=-1; 
+					noteinput=noteinput.substring(1);
+					
+				}
+				//octaves
+				if (accidental == -1 || accidental == 1)
+				{
+					if (noteinput.indexOf("_")!=0)
+					{
+						if (noteinput.indexOf("-")==0)
+						{
+							octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+							noteinput=noteinput.substring(2);
+						}
+						else 
+						{
+							octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+							noteinput=noteinput.substring(1);
+						}
+					}
+				}
+				else 
+				{
+					if (noteinput.indexOf("_")!=0)
+					{
+						if (noteinput.indexOf("-")==0)
+						{
+							octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+							noteinput=noteinput.substring(1);
+						}
+						else 
+						{
+							octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+							noteinput=noteinput.substring(0);
+						}
+					}
+				}		
+				space=noteinput.indexOf(" ");
+				if (space!=-1)
+				{
+					duration=Integer.parseInt(noteinput.substring(noteinput.indexOf("_")+1,space));
+				}
+				else 
+				{
+					duration=Integer.parseInt(noteinput.substring(noteinput.indexOf("_")+1));
+				}
+				//next note
+				noteinput=noteinput.substring(space+1);				
+				NM(note,accidental,octave,duration,trans,tempo);			
+		    	accidental=0;
+		    	octave=0;	
+			} 
+		}
+
+		//////////////////////////for single notes and/or last note//////////////////////////
+		else if (space == -1)
+		{
+			
+			note=noteinput.substring(0,1);
+			noteinput=noteinput.substring(1);
+			//accidentals
+			if (noteinput.substring(0,1).equals("#"))
+			{
+				accidental=1; 
+				noteinput=noteinput.substring(1);	
+			}
+			else if (noteinput.substring(0,1).equals("b"))
+			{
+				accidental=-1; 
+				noteinput=noteinput.substring(1);
+				
+			}			
+			
+			//octaves
+			if (accidental == -1 || accidental == 1)
+			{
+				if (noteinput.indexOf("_")!=0)
+				{
+					if (noteinput.indexOf("-")==0)
+					{
+						octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+						noteinput=noteinput.substring(2);
+					}
+					else 
+					{
+						octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+						noteinput=noteinput.substring(1);
+					}
+				}
+			}
+			else 
+			{
+				if (noteinput.indexOf("_")!=0)
+				{
+					if (noteinput.indexOf("-")==0)
+					{
+						octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+						noteinput=noteinput.substring(1);
+					}
+					else 
+					{
+						octave=Integer.parseInt(noteinput.substring(0,noteinput.indexOf("_")));
+						noteinput=noteinput.substring(0);
+					}
+				}
+			}
+			duration=Integer.parseInt(noteinput.substring(noteinput.indexOf("_")+1));
+			
+			NM(note,accidental,octave,duration,trans,tempo);			
+	    	accidental=0;
+	    	octave=0;	
+		}	 
+   }  //////End NotePlayer method		
+    
+    //notenum table and playnote
+    public static void NM(String note, int accidental, int octave, int duration,int trans,double tempo)
+    {
+    	int notenum=0;
+		duration*=(tempo);
+		duration=(int)(duration);
+
+    	if (note.equals ("C")) {notenum=60;}
+    	else if (note.equals ("D")) {notenum=62;}
+    	else if (note.equals ("E")) {notenum=64;}
+    	else if (note.equals ("F")) {notenum=65;}
+    	else if (note.equals ("G")) {notenum=67;}
+    	else if (note.equals ("A")) {notenum=69;}
+    	else if (note.equals ("B")) {notenum=71;}
     	
+    		if (accidental==1)	
+    		{
+    			notenum+=12*octave+1+trans;
+    			playNote(notenum,duration);
+    		}
+    		else if (accidental==-1)
+    		{
+    			
+    			
+    			notenum+=12*octave-1+trans;
+    			playNote(notenum,duration);
+    		}
+    		else 
+    		{
+    			notenum+=12*octave+trans;
+    			playNote(notenum,duration);
+    		}
+    		
     }
-    
-    
-    //check input for piano note
-    public static void checkPressedKey()
+    public static void ACC(int accidental, String noteinput)
     {
-	  
-	  String key = notePlayer.API.getPressedKey();
-	  
-	  if (key!=null)
-	  {
-		  
-		  notenum=0;
-		  if(key.equals("v"))
-		  {
-			  notenum+=12;
-		  }
-		  noteplayer(key);
-	  }
-	  
-	  
-	  return;
-	  
-    }
-    
-    public static void noteplayer(String key)
-    {
-    	  
-    	  //Inside staff
-    	  if(key.equals("1")) {notenum+=60; System.out.print("C "); notePlayer.API.paintSolidColor(1, 0, Color.YELLOW);}
-    	  else if(key.equals("2")) {notenum+=62; System.out.print("D "); notePlayer.API.paintSolidColor(1, 1, Color.YELLOW);}
-		  else if(key.equals("3")) {notenum+=64; System.out.print("E "); notePlayer.API.paintSolidColor(1, 2, Color.YELLOW);}
-		  else if(key.equals("4")) {notenum+=65; System.out.print("F "); notePlayer.API.paintSolidColor(1, 3, Color.YELLOW);}
-		  else if(key.equals("5")) {notenum+=67; System.out.print("G "); notePlayer.API.paintSolidColor(1, 4, Color.YELLOW);}
-		  else if(key.equals("6")) {notenum+=69; System.out.print("A "); notePlayer.API.paintSolidColor(1, 5, Color.YELLOW);}
-		  else if(key.equals("7")) {notenum+=71; System.out.print("B "); notePlayer.API.paintSolidColor(1, 6, Color.YELLOW);}
-		  else if(key.equals("8")) {notenum+=72; System.out.print("C^ "); notePlayer.API.paintSolidColor(1, 7, Color.YELLOW);}
-    	  //Accidentals
-		  else if(key.equals("Y")) {notenum+=61; System.out.print("C# "); notePlayer.API.paintSolidColor(0, 0, Color.YELLOW);}
-		  else if(key.equals("U")) {notenum+=63; System.out.print("Eb "); notePlayer.API.paintSolidColor(0, 2, Color.YELLOW);}
-		  else if(key.equals("I")) {notenum+=66; System.out.print("F# "); notePlayer.API.paintSolidColor(0, 3, Color.YELLOW);}
-		  else if(key.equals("O")) {notenum+=68; System.out.print("G# "); notePlayer.API.paintSolidColor(0, 4, Color.YELLOW);}
-		  else if(key.equals("P")) {notenum+=70; System.out.print("Bb "); notePlayer.API.paintSolidColor(0, 6, Color.YELLOW);}
-
-    	  if(notenum>=40)
-    	  {
-    		  playNote(notenum,200);
-    	  }
-    	  keyboard(columns);
-    	  //System.out.println(octave);
+    	if (noteinput.substring(0,1).equals("#"))
+		{
+			accidental=1; 
+			noteinput=noteinput.substring(1);
+		}
+		else if (noteinput.substring(0,1).equals("b"))
+		{
+			accidental=-1; 
+			noteinput=noteinput.substring(1);
+		}
     }
     
 
 //-------------------------------------------------------------------//
-
     /**
+     * WARNING!!!  DO NOT MODIFY THIS METHOD.
      * 
      * Once you have calculated the MIDI note number and its duration, call this
      * method to play that note.
@@ -185,6 +302,7 @@ public class Piano
     
 
 	/**
+	 * WARNING!!!  DO NOT MODIFY THIS METHOD.
 	 * 
 	 * Call this method to change the instrument used to play notes.
 	 * 
