@@ -20,11 +20,12 @@ public class Piano
 	private static String end;
 	private static int columns;
 	private static int notenum;
+	private static String input;
 	
     public static void main(String[] args)
     { 
     	
-    	System.out.println("NUMBERS - play notes(1-8) || Y,U,I,O,P - Accidentals || ///fix keys/// (-/+ octave) ");
+    	System.out.println("NUMBERS - play notes(1-8) || Y,U,I,O,P - Accidentals");
     	System.out.println("Chromatic scale: 1 Y 2 U 3 4 I 5 O 6 P 7 8");
     	columns=8;
     	notenum=0;
@@ -32,25 +33,38 @@ public class Piano
     	ca.setCellColor(Color.white);
     	ca.setBorderColor(Color.black);
     	notePlayer.API.initialize(ca); 
+    	
+    	Scanner con=new Scanner(System.in);
+    	System.out.println("");
+     	System.out.println("Type 'list' or Select an Instrument");
+    	input = con.nextLine();
+   
+    	if(input.equalsIgnoreCase("list"))
+    	{
+    		listI();
+    	}
+    	else
+    	{
+    		setI(input);
+    	}
+    	
+    	
     	keyboard(columns);
     	
-    	String input=""; 
     	
 		
 		while(!(input.equals("x")))
 		{
-			Scanner con=new Scanner(System.in);
 			checkPressedKey();	
 		}
 		
     }
     
-   /* public static void setI(String input)
+    public static void setI(String input)
     {
-    	String set=input;
-		set=set.substring(15);
-		int instrumentNumber=Integer.parseInt(set);
+		int instrumentNumber=Integer.parseInt(input);
 		setInstrument(instrumentNumber);
+		System.out.println("Keyboard initialized.");
     }
     
     public static void listI()
@@ -81,7 +95,13 @@ public class Piano
     	System.out.println("115: Woodblock    116: Taiko        117: Melo. Tom 1  118: Synth Drum   119: Reverse Cym.");
     	System.out.println("120: Gt.FretNoise 121: Breath Noise 122: Seashore     123: Bird         124: Telephone 1");
     	System.out.println("125: Helicopter   126: Applause     127: Gun Shot");
-    }*/
+    	
+    	Scanner con=new Scanner(System.in);
+    	System.out.println("");
+    	System.out.println("Select an Instrument:");
+    	input = con.nextLine();
+    	setI(input);
+    }
     
 
     
@@ -101,10 +121,10 @@ public class Piano
     	String[] notes = {"C", "D", "E", "F", "G", "A", "B", "C"};
     	//String[] notesAccidental = {"C#", "D", "Eb", "F#", "G#", "Bb"};
     	//Set regular notes
+    	
     	for(int i = 0; i<columns;i++)
     	{
     		notePlayer.API.drawText(1, i, notes[i], Color.BLACK);
-    		//System.out.println(notes[i]+ i);
     	}
     	//Set Accidentals
     	notePlayer.API.drawText(0, 0, "C#", Color.BLACK);
@@ -168,30 +188,14 @@ public class Piano
 
 //-------------------------------------------------------------------//
 
-    /**
-     * 
-     * Once you have calculated the MIDI note number and its duration, call this
-     * method to play that note.
-     * 
-     * @param noteNumber The MIDI note number, as described in the spec.
-     * @param durationMs The number of milliseconds to play the note.  A larger number will play the note for a longer time.
-     */
+
     public static void playNote(int noteNumber, int durationMs)
     {
         MidiWrapper.playNote(noteNumber, durationMs);
     }
     
-
-	/**
-	 * 
-	 * Call this method to change the instrument used to play notes.
-	 * 
-	 * @param instrumentNumber The MIDI instrument number to begin using.  Must
-	 * be in the range between 0 and 127 inclusive.
-	 */
 	public static void setInstrument(int instrumentNumber)
 	{
-		
 		MidiWrapper.setInstrument(instrumentNumber);
 	}
 }
