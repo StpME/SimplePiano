@@ -16,8 +16,8 @@ public class Piano
 	*Other functions: accidentals, octaves to implement
 	*/
 	
-	private static int octave;
-	private static String end;
+	private static ArrayList<String> noteList;
+	private static int noteCount;
 	private static int columns;
 	private static int notenum;
 	private static String input;
@@ -27,8 +27,14 @@ public class Piano
     	
     	System.out.println("NUMBERS - play notes(1-8) || Y,U,I,O,P - Accidentals");
     	System.out.println("Chromatic scale: 1 Y 2 U 3 4 I 5 O 6 P 7 8");
+    	
+    	//Field initialization
     	columns=8;
     	notenum=0;
+    	
+    	noteList = new ArrayList<String>();
+    	noteCount=0;
+    	
     	CustomAppearance ca = new CustomAppearance(2, columns);
     	ca.setCellColor(Color.white);
     	ca.setBorderColor(Color.black);
@@ -162,20 +168,34 @@ public class Piano
     {
     	  
     	  //Inside staff
-    	  if(key.equals("1")) {notenum+=60; System.out.print("C "); notePlayer.API.paintSolidColor(1, 0, Color.YELLOW);}
-    	  else if(key.equals("2")) {notenum+=62; System.out.print("D "); notePlayer.API.paintSolidColor(1, 1, Color.YELLOW);}
-		  else if(key.equals("3")) {notenum+=64; System.out.print("E "); notePlayer.API.paintSolidColor(1, 2, Color.YELLOW);}
-		  else if(key.equals("4")) {notenum+=65; System.out.print("F "); notePlayer.API.paintSolidColor(1, 3, Color.YELLOW);}
-		  else if(key.equals("5")) {notenum+=67; System.out.print("G "); notePlayer.API.paintSolidColor(1, 4, Color.YELLOW);}
-		  else if(key.equals("6")) {notenum+=69; System.out.print("A "); notePlayer.API.paintSolidColor(1, 5, Color.YELLOW);}
-		  else if(key.equals("7")) {notenum+=71; System.out.print("B "); notePlayer.API.paintSolidColor(1, 6, Color.YELLOW);}
-		  else if(key.equals("8")) {notenum+=72; System.out.print("C^ "); notePlayer.API.paintSolidColor(1, 7, Color.YELLOW);}
+    	  if(key.equals("1")) {notenum+=60; System.out.print("C "); noteList.add("C"); notePlayer.API.paintSolidColor(1, 0, Color.YELLOW);}
+    	  else if(key.equals("2")) {notenum+=62; System.out.print("D "); noteList.add("D"); notePlayer.API.paintSolidColor(1, 1, Color.YELLOW);}
+		  else if(key.equals("3")) {notenum+=64; System.out.print("E "); noteList.add("E"); notePlayer.API.paintSolidColor(1, 2, Color.YELLOW);}
+		  else if(key.equals("4")) {notenum+=65; System.out.print("F "); noteList.add("F"); notePlayer.API.paintSolidColor(1, 3, Color.YELLOW);}
+		  else if(key.equals("5")) {notenum+=67; System.out.print("G "); noteList.add("G"); notePlayer.API.paintSolidColor(1, 4, Color.YELLOW);}
+		  else if(key.equals("6")) {notenum+=69; System.out.print("A "); noteList.add("A"); notePlayer.API.paintSolidColor(1, 5, Color.YELLOW);}
+		  else if(key.equals("7")) {notenum+=71; System.out.print("B "); noteList.add("B"); notePlayer.API.paintSolidColor(1, 6, Color.YELLOW);}
+		  else if(key.equals("8")) {notenum+=72; System.out.print("C^ "); noteList.add("C^");notePlayer.API.paintSolidColor(1, 7, Color.YELLOW);}
     	  //Accidentals
-		  else if(key.equals("Y")) {notenum+=61; System.out.print("C# "); notePlayer.API.paintSolidColor(0, 0, Color.YELLOW);}
-		  else if(key.equals("U")) {notenum+=63; System.out.print("Eb "); notePlayer.API.paintSolidColor(0, 2, Color.YELLOW);}
-		  else if(key.equals("I")) {notenum+=66; System.out.print("F# "); notePlayer.API.paintSolidColor(0, 3, Color.YELLOW);}
-		  else if(key.equals("O")) {notenum+=68; System.out.print("G# "); notePlayer.API.paintSolidColor(0, 4, Color.YELLOW);}
-		  else if(key.equals("P")) {notenum+=70; System.out.print("Bb "); notePlayer.API.paintSolidColor(0, 6, Color.YELLOW);}
+		  else if(key.equals("Y")) {notenum+=61; System.out.print("C# "); noteList.add("C#"); notePlayer.API.paintSolidColor(0, 0, Color.YELLOW);}
+		  else if(key.equals("U")) {notenum+=63; System.out.print("Eb "); noteList.add("Eb"); notePlayer.API.paintSolidColor(0, 2, Color.YELLOW);}
+		  else if(key.equals("I")) {notenum+=66; System.out.print("F# "); noteList.add("F#"); notePlayer.API.paintSolidColor(0, 3, Color.YELLOW);}
+		  else if(key.equals("O")) {notenum+=68; System.out.print("G# "); noteList.add("G#"); notePlayer.API.paintSolidColor(0, 4, Color.YELLOW);}
+		  else if(key.equals("P")) {notenum+=70; System.out.print("Bb "); noteList.add("Bb"); notePlayer.API.paintSolidColor(0, 6, Color.YELLOW);}
+    	  //Print noteList and noteCount
+		  else if(key.equals("N"))
+		  {
+			  System.out.print("Notes played: ");
+			  for(int i = 0;i<noteList.size();i++)
+			  {
+				  System.out.print(noteList.get(i) + " ");
+			  }
+			  System.out.println("");
+			  System.out.println("Number of notes: "+noteCount);
+		  }
+    	  
+    	  //Note Counter
+    	  noteCount++;
 
     	  if(notenum>=40)
     	  {
@@ -188,7 +208,7 @@ public class Piano
 
 //-------------------------------------------------------------------//
 
-
+    //Classes for playing notes and constructing API(MidiPlayer, Objectland) provided by BHS CS
     public static void playNote(int noteNumber, int durationMs)
     {
         MidiWrapper.playNote(noteNumber, durationMs);
