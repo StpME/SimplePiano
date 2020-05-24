@@ -1,7 +1,7 @@
 package notePlayer;
 
 //imports
-//Project borrows packages from APCS to construct API and play notes
+
 import core.MidiWrapper;
 import java.util.Scanner;
 import java.awt.Color;
@@ -146,23 +146,18 @@ public class Piano
     //check input for piano note
     public static void checkPressedKey()
     {
-	  
 	  String key = notePlayer.API.getPressedKey();
 	  
-	  if (key!=null)
+	  if (!(key.equals("") || key==null))
 	  {
-		  
 		  notenum=0;
-		  if(key.equals("v"))
+		  if(key.equals("v") || key.equals("b"))
 		  {
 			  notenum+=12;
 		  }
 		  noteSet(key);
 	  }
-	  
-	  
 	  return;
-	  
     }
     
     public static void noteSet(String key)
