@@ -13,7 +13,7 @@ public class Piano
 	
 	/* 				***Basic Purpose***
 	*Create a piano keyboard, pressing the keys will play a note.
-	*Other functions: accidentals, octaves to implement
+	*Other functions: accidentals, note list and note counter
 	*/
 	
 	private static ArrayList<String> noteList;
@@ -25,7 +25,7 @@ public class Piano
     public static void main(String[] args)
     { 
     	
-    	System.out.println("NUMBERS - play notes(1-8) || Y,U,I,O,P - Accidentals");
+    	System.out.println("NUMBERS - play notes(1-8) || Y,U,I,O,P - Accidentals || N - Display Counter & Notes");
     	System.out.println("Chromatic scale: 1 Y 2 U 3 4 I 5 O 6 P 7 8");
     	
     	//Field initialization
@@ -45,6 +45,7 @@ public class Piano
      	System.out.println("Type 'list' or Select an Instrument");
     	input = con.nextLine();
    
+    	//List + set instrument
     	if(input.equalsIgnoreCase("list"))
     	{
     		listI();
@@ -54,7 +55,7 @@ public class Piano
     		setI(input);
     	}
     	
-    	
+    	//Initialize API
     	keyboard(columns);
     	
     	
@@ -66,12 +67,7 @@ public class Piano
 		
     }
     
-    public static void setI(String input)
-    {
-		int instrumentNumber=Integer.parseInt(input);
-		setInstrument(instrumentNumber);
-		System.out.println("Keyboard initialized.");
-    }
+   
     
     public static void listI()
     {
@@ -110,7 +106,12 @@ public class Piano
     }
     
 
-    
+    public static void setI(String input)
+    {
+		int instrumentNumber=Integer.parseInt(input);
+		setInstrument(instrumentNumber);
+		System.out.println("Keyboard initialized.");
+    }
     
     
     
@@ -156,7 +157,7 @@ public class Piano
 		  {
 			  notenum+=12;
 		  }
-		  noteplayer(key);
+		  noteSet(key);
 	  }
 	  
 	  
@@ -164,10 +165,11 @@ public class Piano
 	  
     }
     
-    public static void noteplayer(String key)
+    public static void noteSet(String key)
     {
-    	  
-    	  //Inside staff
+    	  //paintSolidColor(row,col,color,text to print)
+    	
+    	  //Inside staff 
     	  if(key.equals("1")) {notenum+=60; System.out.print("C "); noteList.add("C"); notePlayer.API.paintSolidColor(1, 0, Color.YELLOW);}
     	  else if(key.equals("2")) {notenum+=62; System.out.print("D "); noteList.add("D"); notePlayer.API.paintSolidColor(1, 1, Color.YELLOW);}
 		  else if(key.equals("3")) {notenum+=64; System.out.print("E "); noteList.add("E"); notePlayer.API.paintSolidColor(1, 2, Color.YELLOW);}
@@ -182,32 +184,39 @@ public class Piano
 		  else if(key.equals("I")) {notenum+=66; System.out.print("F# "); noteList.add("F#"); notePlayer.API.paintSolidColor(0, 3, Color.YELLOW);}
 		  else if(key.equals("O")) {notenum+=68; System.out.print("G# "); noteList.add("G#"); notePlayer.API.paintSolidColor(0, 4, Color.YELLOW);}
 		  else if(key.equals("P")) {notenum+=70; System.out.print("Bb "); noteList.add("Bb"); notePlayer.API.paintSolidColor(0, 6, Color.YELLOW);}
-    	  //Print noteList and noteCount
-		  else if(key.equals("N"))
+    	  //Print/add to noteList and noteCount
+		  listCount(key);
+		  
+		  
+		  if(notenum>=40)
+		  {
+			  playNote(notenum,200);
+		  }
+		  keyboard(columns); 
+    }
+    
+    public static void listCount(String key)
+    {
+		  if(key.equals("N") || key.equals("n"))
 		  {
 			  System.out.print("Notes played: ");
-			  for(int i = 0;i<noteList.size();i++)
-			  {
-				  System.out.print(noteList.get(i) + " ");
-			  }
-			  System.out.println("");
-			  System.out.println("Number of notes: "+noteCount);
+		  for(int i = 0;i<noteList.size();i++)
+		  {
+			  System.out.print(noteList.get(i) + " ");
 		  }
-    	  
-    	  //Note Counter
-    	  noteCount++;
-
-    	  if(notenum>=40)
-    	  {
-    		  playNote(notenum,200);
-    	  }
-    	  keyboard(columns);
-    	  //System.out.println(octave);
+		  System.out.println("");
+		  System.out.println("Number of notes: "+noteCount);
+		  }    //1 Y 2 U 3 4 I 5 O 6 P 7 8
+		  
+		  //Note Counter
+		  noteCount++;
     }
+	 
     
 
 //-------------------------------------------------------------------//
 
+    //Acknowledgments 
     //Classes for playing notes and constructing API(MidiPlayer, Objectland) provided by BHS CS
     public static void playNote(int noteNumber, int durationMs)
     {
